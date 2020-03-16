@@ -1,3 +1,19 @@
 # pathways
 
-Pathway data compiled for use in gene-set enrichment analyses.
+Pathway data compiled for gene-set enrichment analyses.
+
+See the "data" directory for data files downloaded from the original
+sources, and processed data files.
+
+## Data
+
++ `pathways.txt.gz` is a tab-delimited text file containing basic
+  information about the pathways, such as the name of the pathway  It
+  was downloaded from [Pathway Commons][pc-12-downloads] on March
+  20, 2020.
+
++ Describe `PathwayCommons12.All.hgnc.gmt.gz` here.
+
++ Describe `genes.txt.gz` here.
+
+[pc-12-downloads]: https://www.pathwaycommons.org/archives/PC2/v12
