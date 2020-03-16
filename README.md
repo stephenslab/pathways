@@ -8,9 +8,9 @@ sources, and processed data files.
 ## Data
 
 + `pathways.txt.gz` is a tab-delimited text file containing basic
-  information about the pathways, such as the name of the pathway  It
-  was downloaded from [Pathway Commons][pc-12-downloads] on March
-  20, 2020.
+  pathways meta data, such as the name of the pathway, and the data
+  source. This file was downloaded from [Pathway
+  Commons][pc-12-downloads] on March 20, 2020.
 
 + Describe `PathwayCommons12.All.hgnc.gmt.gz` here.
 

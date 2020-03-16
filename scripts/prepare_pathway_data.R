@@ -4,7 +4,15 @@ source("../code/read_data.R")
 
 # LOAD DATA
 # ---------
-# TO DO: Explain here what these few lines of code do.
-cat("Reading pathway data from pathways.txt.gz.\n")
-out <- read_pathways("../data/pathways.txt.gz")
+# Read the Pathway Commons pathway meta data (e.g., pathway names,
+# data sources) from the tab-delimited text file.
+cat("Reading Pathway Commons pathway data from pathways.txt.gz.\n")
+out <- read_pc_pathways("../data/pathways.txt.gz")
+
+# SUMMARIZE DATA
+# --------------
 print(summary(out$datasource))
+
+# WRITE DATA TO FILE
+# ------------------
+# TO DO.
