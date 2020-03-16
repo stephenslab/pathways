@@ -2,8 +2,8 @@
 
 Pathway data compiled for gene-set enrichment analyses.
 
-See the "data" directory for data files downloaded from the original
-sources, and processed data files.
+See the **data** directory for data files downloaded from the original
+sources, and the processed data files.
 
 ## Data
 
