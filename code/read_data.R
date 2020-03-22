@@ -1,15 +1,16 @@
 # Read the HGNC gene data from the tab-delimited text file downloaded
-# from the HGNC website (www.genenames.org). Only "approved" entries
-# are retained.
+# from the HGNC website (www.genenames.org). Only entries marked as
+# being "approved" are outputted.
 read_hgnc_data <- function (file) {
   out <- suppressMessages(read_delim(file,delim = "\t"))
   class(out) <- "data.frame"
   names(out) <- c("hgnc_id","approved_symbol","approved_name","status",
                   "previous_symbols","alias_symbols","chr","accession_numbers",
                   "refseq_ids")
-  out <- transform(out,
-                   hgnc_id = as.numeric(sapply(strsplit(hgnc_id,":"),"[",2)),
-                   status  = factor(status))
+  out <-
+    transform(out,
+      hgnc_id = as.numeric(sapply(strsplit(hgnc_id,":",fixed = TRUE),"[",2)),
+      status  = factor(status))
   return(subset(out,status == "Approved"))
 }
 
