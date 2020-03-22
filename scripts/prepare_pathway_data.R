@@ -20,8 +20,7 @@ suppressWarnings(
                        col_types = cols("i","c","c","c","c","c","i","c")))
 class(biosys) <- "data.frame"
 biosys <- subset(biosys,type == "pathway" & taxid == 9606)
-biosys <- biosys[c("bsid","datasource","accession","name","taxid",
-                   "description")]
+biosys <- biosys[c("bsid","datasource","accession","name","description")]
 biosys <- transform(biosys,datasource = factor(datasource))
 
 stop()
