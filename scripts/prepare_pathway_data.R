@@ -22,9 +22,6 @@ stop()
 cat("Reading HGNC data from genes.txt.gz.\n")
 genes <- read_hgnc_data("../data/genes.txt.gz")
 
-
-stop()
-
 # Read the Pathway Commons pathway meta data (e.g., pathway names,
 # data sources) from the tab-delimited text file.
 cat("Reading Pathway Commons pathway data from pathways.txt.gz.\n")

@@ -97,7 +97,7 @@ read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
   colnames(out) <- bsid2info$bsid
   return(out)
 }
-  
+
 # Read the HGNC gene data from the tab-delimited text file downloaded
 # from the HGNC website (www.genenames.org). Only entries marked as
 # being "approved" are outputted.
