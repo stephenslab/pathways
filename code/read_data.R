@@ -45,13 +45,13 @@ read_gene_info <- function (file) {
 # Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
 # frame with one row per BioSystems pathway and the following columns:
+# bsid, data_source, accession and name.
 read_bsid2info <- function (file) {
   out <- suppressWarnings(
-    read_delim(file,delim = "\t",quote = "",
+    read_delim(file,delim = "\t",quote = "",progress = FALSE,
                col_names = c("bsid","data_source","accession","name",
                              "type","scope","tax_id","description"),
-               col_types = cols("i","c","c","c","c","c","i","c"),
-               progress = FALSE))
+               col_types = cols("i","c","c","c","c","c","i","c")))
   class(out) <- "data.frame"
   out <- subset(out,type == "pathway" & tax_id == 9606)
   out <- transform(out,data_source = factor(data_source))
@@ -60,6 +60,37 @@ read_bsid2info <- function (file) {
   return(out)
 }
 
+# Read "biosystems_gene" tab-delimited 
+read_biosystems_gene <- function (file) {
+  out <- read_delim(file,delim = "\t",progress = FALSE,
+                            col_names = c("bsid","geneid","score"),
+                            col_types = cols("i","i","i"))
+  class(out) <- "data.frame"
+  return(out)
+}
+
+# TO DO: Explain here what this function does, and how to use it.
+read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
+
+  # Read the "biosystems_gene" file, and retain only gene-pathway
+  # associations that have corresponding entries in the gene and
+  # pathway tables.
+  biosys_gene <- read_biosystems_gene(file)
+  biosys_gene <- subset(biosys_gene,
+                        is.element(bsid,bsid2info$bsid)  &
+                        is.element(geneid,gene_info$GeneID))
+
+  # Create an n x m sparse binary matrix, where n is the number of genes
+  # and m is the number of pathways.
+  out <- with(biosys_gene,
+              sparseMatrix(i = match(geneid,gene_info$GeneID),
+                           j = match(bsid,bsid2info$bsid),x = score,
+                           dims = c(nrow(gene_info),nrow(bsid2info))))
+  rownames(out) <- gene_info$GeneID
+  colnames(out) <- bsid2info$bsid
+  return(out)
+}
+  
 # Read the HGNC gene data from the tab-delimited text file downloaded
 # from the HGNC website (www.genenames.org). Only entries marked as
 # being "approved" are outputted.

@@ -9,34 +9,12 @@ source("../code/read_data.R")
 cat("Reading gene data from Homo_sapiens.gene_info.gz.\n")
 gene_info <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
 
-# TO DO: Explain here what this code does.
+# Read in and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
-biosys <- read_bsid2info("../data/bsid2info.gz")
-
-stop()
-
-# Read data from biosystems_gene.
-biosys_gene <- read_delim("../data/biosystems_gene.gz",delim = "\t",
-                          col_names = c("bsid","geneid","score"),
-                          col_types = cols("i","i","i"),progress = FALSE)
-class(biosys_gene) <- "data.frame"
-biosys_gene <- subset(biosys_gene,
-                      is.element(bsid,biosys$bsid)  &
-                      is.element(geneid,gene_info$GeneID))
-
-# Create an n x m sparse binary matrix, where n is the number of genes
-# and m is the number of pathways.
-biosys_gene_sets <-
-  sparseMatrix(i = match(biosys_gene$geneid,gene_info$GeneID),
-               j = match(biosys_gene$bsid,biosys$bsid),
-               x = biosys_gene$score,dims = c(nrow(gene_info),nrow(biosys)))
-rownames(biosys_gene_sets) <- gene_info$GeneID
-colnames(biosys_gene_sets) <- biosys$bsid
-
-# Remove gene sets with no genes.
-cols             <- which(colSums(biosys_gene_sets) > 0)
-biosys_gene_sets <- biosys_gene_sets[,cols]
-
+bsid2info        <- read_bsid2info("../data/bsid2info.gz")
+biosys_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
+                                              bsid2info,gene_info)
+    
 stop()
 
 # Read the HGNC (HUGO Gene Nomenclature Committee) gene data from the
