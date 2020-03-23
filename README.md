@@ -9,6 +9,10 @@ below for instructions on downloading the data.
 
 ## Data
 
++ **Homo_sapiens.gene_info.gz** is a tab-delimitd file containing gene
+  information. This file was downloaded from the
+  [NCBI FTP site][ncbi-ftp-gene] on March 22, 2020.
+
 + **genes.txt.gz** is a tab-delimited text file containing gene
   information. This file was downloaded from the [HGNC website][hgnc]
   on March 20, 2020.
@@ -23,6 +27,7 @@ below for instructions on downloading the data.
 
 ## Data 
 
+[ncbi-ftp-gene]: https://ftp.ncbi.nih.gov/gene
 [hgnc]: https://www.genenames.org/download/custom
 [ncbi-ftp-biosystems]: https://ftp.ncbi.nih.gov/pub/biosystems
 [pc-12-downloads]: https://www.pathwaycommons.org/archives/PC2/v12

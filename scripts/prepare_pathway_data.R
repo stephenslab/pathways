@@ -5,23 +5,69 @@ source("../code/read_data.R")
 
 # LOAD DATA
 # ---------
+# Read data from gene_info file.
+cat("Reading RefSeq gene data from Homo_sapiens.gene_info.gz.\n")
+suppressMessages(
+  refseq <- read_delim("../data/Homo_sapiens.gene_info.gz",delim = "\t",
+                       col_names = TRUE))
+class(refseq) <- "data.frame"
+refseq <- refseq[c("GeneID","Symbol","Synonyms","dbXrefs","chromosome")]
+refseq$chromosome[refseq$chromosome == "-"] <- NA
+refseq$Synonyms[refseq$Synonyms == "-"] <- NA
+refseq$dbXrefs[refseq$dbXrefs == "-"] <- NA
+refseq <- transform(refseq,chromosome = factor(chromosome))
+
+# Get the Ensembl ids. Note that in a small number of cases there is
+# more than one Ensembl id.
+refseq$Ensembl <- 
+  sapply(strsplit(refseq$dbXrefs,"|",fixed = TRUE),
+         function (x) {
+           i <- which(substr(x,1,8) == "Ensembl:")
+           if (length(i) > 0)
+             return(substr(x[i[1]],9,nchar(x[i[1]])))
+           else
+             return(NA)
+         })
+
+# Get the HGNC ids.
+refseq$HGNC <-
+  sapply(strsplit(refseq$dbXrefs,"|",fixed = TRUE),
+         function (x) {
+           i <- which(substr(x,1,10) == "HGNC:HGNC:")
+           if (length(i) > 0)
+             return(substr(x[i[1]],11,nchar(x[i[1]])))
+           else
+             return(NA)
+         })
+
+stop()
+
 # Read the HGNC (HUGO Gene Nomenclature Committee) gene data from the
 # tab-delimited text file.
-cat("Reading HGNC gene data from genes.txt.gz.\n")
+cat("Reading HGNC data from genes.txt.gz.\n")
 genes <- read_hgnc_data("../data/genes.txt.gz")
 
 # TO DO: Explain here what this code does.
-cat("Reading NCBI BioSystems pathway data from bsid2info.gz and",
-    "biosystems_gene.gz.\n")
+cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
+
+# Read data from bsid2info.
 suppressWarnings(
   biosys <- read_delim("../data/bsid2info.gz",delim = "\t",quote = "",
-                       col_names = c("bsid","datasource","accession","name",
-                           "type","scope","taxid","description"),
+                       col_names = c("bsid","data_source","accession","name",
+                           "type","scope","tax_id","description"),
                        col_types = cols("i","c","c","c","c","c","i","c")))
 class(biosys) <- "data.frame"
 biosys <- subset(biosys,type == "pathway" & taxid == 9606)
-biosys <- biosys[c("bsid","datasource","accession","name","description")]
+biosys <- biosys[c("bsid","datasource","accession","name")]
 biosys <- transform(biosys,datasource = factor(datasource))
+rownames(biosys) <- NULL
+
+# Read data from biosystems_gene.
+biosys_gene<- read_delim("../data/biosystems_gene.gz",delim = "\t",
+                         col_names = c("bsid","geneid","score"),
+                         col_types = cols("i","i","i"))
+class(biosys_gene) <- "data.frame"
+biosys_gene <- subset(biosys_gene,is.element(bsid,biosys$bsid))
 
 stop()
 
