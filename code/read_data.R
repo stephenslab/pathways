@@ -1,3 +1,47 @@
+# Read the "gene_info" tab-delimited text file downloaded from the
+# NCBI FTP site (ftp.ncbi.nih.gov/gene), and return a data frame
+# containing the following columns: GeneID, Symbol, Synonyms,
+# chromosome, Ensembl and HGNC.
+read_gene_info <- function (file) {
+
+  # Read the data into a data frame.
+  out <- suppressMessages(read_delim(file,delim = "\t",col_names = TRUE))
+  class(out) <- "data.frame"
+  dbXrefs    <- out$dbXrefs
+  out        <- out[c("GeneID","Symbol","Synonyms","chromosome")]
+
+  # Set any entries with a single hyphen to NA, and convert the
+  # "chromosome" column to a factor.
+  out$chromosome[out$chromosome == "-"] <- NA
+  out$Synonyms[out$Synonyms == "-"]     <- NA
+  dbXrefs[dbXrefs == "-"]               <- NA
+  out <- transform(out,chromosome = factor(chromosome))
+
+  # Extract the Ensembl ids. Note that a small number of genes map to
+  # more than one Ensembl id; in those cases, we retain the first
+  # Ensembl id only.
+  dbXrefs <- strsplit(dbXrefs,"|",fixed = TRUE)
+  out$Ensembl <- sapply(dbXrefs,function (x) {
+                            i <- which(substr(x,1,8) == "Ensembl:")
+                            if (length(i) > 0)
+                              return(substr(x[i[1]],9,nchar(x[i[1]])))
+                            else
+                                return(as.character(NA))
+                          })
+
+  # Extract the HGNC (HUGO Gene Nomenclature Committee) ids.
+  out$HGNC <- sapply(dbXrefs,function (x) {
+                i <- which(substr(x,1,10) == "HGNC:HGNC:")
+                if (length(i) > 0)
+                  return(substr(x[i[1]],6,nchar(x[i[1]])))
+                else
+                  return(NA)
+              })
+
+  # Return the processed gene data.
+  return(out)
+}
+
 # Read the HGNC gene data from the tab-delimited text file downloaded
 # from the HGNC website (www.genenames.org). Only entries marked as
 # being "approved" are outputted.

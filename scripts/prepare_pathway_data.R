@@ -6,39 +6,8 @@ source("../code/read_data.R")
 # LOAD DATA
 # ---------
 # Read data from gene_info file.
-cat("Reading RefSeq gene data from Homo_sapiens.gene_info.gz.\n")
-suppressMessages(
-  refseq <- read_delim("../data/Homo_sapiens.gene_info.gz",delim = "\t",
-                       col_names = TRUE))
-class(refseq) <- "data.frame"
-refseq <- refseq[c("GeneID","Symbol","Synonyms","dbXrefs","chromosome")]
-refseq$chromosome[refseq$chromosome == "-"] <- NA
-refseq$Synonyms[refseq$Synonyms == "-"] <- NA
-refseq$dbXrefs[refseq$dbXrefs == "-"] <- NA
-refseq <- transform(refseq,chromosome = factor(chromosome))
-
-# Get the Ensembl ids. Note that in a small number of cases there is
-# more than one Ensembl id.
-refseq$Ensembl <- 
-  sapply(strsplit(refseq$dbXrefs,"|",fixed = TRUE),
-         function (x) {
-           i <- which(substr(x,1,8) == "Ensembl:")
-           if (length(i) > 0)
-             return(substr(x[i[1]],9,nchar(x[i[1]])))
-           else
-             return(NA)
-         })
-
-# Get the HGNC ids.
-refseq$HGNC <-
-  sapply(strsplit(refseq$dbXrefs,"|",fixed = TRUE),
-         function (x) {
-           i <- which(substr(x,1,10) == "HGNC:HGNC:")
-           if (length(i) > 0)
-             return(substr(x[i[1]],11,nchar(x[i[1]])))
-           else
-             return(NA)
-         })
+cat("Reading gene data from Homo_sapiens.gene_info.gz.\n")
+gene_info <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
 
 stop()
 
