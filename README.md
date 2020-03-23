@@ -21,6 +21,10 @@ below for instructions on downloading the data.
   about the NCBI BioSystems pathways. This file was downloaded from
   the [NCBI FTP site][ncbi-ftp-biosystems] on March 22, 2020.
 
++ **biosystems_gene.gz** is a tab-delimited file containing gene set
+  data for the NCBI BioSystems pathways. This file was downloaded from
+  the [NCBI FTP site][ncbi-ftp-biosystems] on March 22, 2020.
+
 + **PathwayCommons12.All.hgnc.gmt.gz** is a text file containing 
   pathway data, including gene sets. This file was downloaded from
   [Pathway Commons][pc-12-downloads] on March 20, 2020.

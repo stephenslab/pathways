@@ -44,7 +44,7 @@ read_gene_info <- function (file) {
 
 # Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
-# frame with one row per BioSystems pathway and the following columns:
+# frame with one row per BioSystems pathway, and the following columns:
 # bsid, data_source, accession and name.
 read_bsid2info <- function (file) {
   out <- suppressWarnings(
@@ -60,7 +60,10 @@ read_bsid2info <- function (file) {
   return(out)
 }
 
-# Read "biosystems_gene" tab-delimited 
+# Read the "biosystems_gene" tab-delimited file downloaded from the
+# NCBI FTP site (ftp.ncbi.nih.gov/pub/biosystems). The return value is
+# a data frame with one row per gene-pathway association, and the
+# following columns: bsid, geneid and score.
 read_biosystems_gene <- function (file) {
   out <- read_delim(file,delim = "\t",progress = FALSE,
                             col_names = c("bsid","geneid","score"),
@@ -69,7 +72,11 @@ read_biosystems_gene <- function (file) {
   return(out)
 }
 
-# TO DO: Explain here what this function does, and how to use it.
+# Read the "biosystems_gene" tab-delimited file downloaded from the
+# NCBI FTP site (ftp.ncbi.nih.gov/pub/biosystems), and return an n x m
+# sparse matrix, where n is the number of genes and m is the number of
+# BioSystems pathways. The entries of this sparse matrix are the "scores"
+# assigned the gene-pathway associations.
 read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
 
   # Read the "biosystems_gene" file, and retain only gene-pathway
@@ -77,11 +84,11 @@ read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
   # pathway tables.
   biosys_gene <- read_biosystems_gene(file)
   biosys_gene <- subset(biosys_gene,
-                        is.element(bsid,bsid2info$bsid)  &
+                        is.element(bsid,bsid2info$bsid) &
                         is.element(geneid,gene_info$GeneID))
 
-  # Create an n x m sparse binary matrix, where n is the number of genes
-  # and m is the number of pathways.
+  # Create an n x m sparse matrix, where n is the number of genes and
+  # m is the number of pathways.
   out <- with(biosys_gene,
               sparseMatrix(i = match(geneid,gene_info$GeneID),
                            j = match(bsid,bsid2info$bsid),x = score,
