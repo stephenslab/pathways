@@ -1,7 +1,7 @@
 # Read the "gene_info" tab-delimited text file downloaded from the
-# NCBI FTP site (ftp.ncbi.nih.gov/gene), and return a data frame
-# containing the following columns: GeneID, Symbol, Synonyms,
-# chromosome, Ensembl and HGNC.
+# NCBI FTP site (ftp.ncbi.nih.gov/gene). The return value is a data
+# frame with one row per gene, and the following columns: GeneID,
+# Symbol, Synonyms, chromosome, Ensembl and HGNC.
 read_gene_info <- function (file) {
 
   # Read the data into a data frame.
@@ -39,6 +39,24 @@ read_gene_info <- function (file) {
               })
 
   # Return the processed gene data.
+  return(out)
+}
+
+# Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
+# site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
+# frame with one row per BioSystems pathway and the following columns:
+read_bsid2info <- function (file) {
+  out <- suppressWarnings(
+    read_delim(file,delim = "\t",quote = "",
+               col_names = c("bsid","data_source","accession","name",
+                             "type","scope","tax_id","description"),
+               col_types = cols("i","c","c","c","c","c","i","c"),
+               progress = FALSE))
+  class(out) <- "data.frame"
+  out <- subset(out,type == "pathway" & tax_id == 9606)
+  out <- transform(out,data_source = factor(data_source))
+  out <- out[c("bsid","data_source","accession","name")]
+  rownames(out) <- NULL
   return(out)
 }
 
