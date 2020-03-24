@@ -13,10 +13,6 @@ below for instructions on downloading the data.
   information. This file was downloaded from the
   [NCBI FTP site][ncbi-ftp-gene] on March 22, 2020.
 
-+ **genes.txt.gz** is a tab-delimited text file containing gene
-  information. This file was downloaded from the [HGNC website][hgnc]
-  on March 20, 2020.
-
 + **bsid2info.gz** is a tab-delimited text file containing information
   about the NCBI BioSystems pathways. This file was downloaded from
   the [NCBI FTP site][ncbi-ftp-biosystems] on March 22, 2020.

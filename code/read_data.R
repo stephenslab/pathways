@@ -98,29 +98,50 @@ read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
   return(out)
 }
 
-# Read the HGNC gene data from the tab-delimited text file downloaded
-# from the HGNC website (www.genenames.org). Only entries marked as
-# being "approved" are outputted.
-read_hgnc_data <- function (file) {
-  out <- suppressMessages(read_delim(file,delim = "\t"))
-  class(out) <- "data.frame"
-  names(out) <- c("hgnc_id","approved_symbol","approved_name","status",
-                  "previous_symbols","alias_symbols","chr","accession_numbers",
-                  "refseq_ids")
-  out <-
-    transform(out,
-      hgnc_id = as.numeric(sapply(strsplit(hgnc_id,":",fixed = TRUE),"[",2)),
-      status  = factor(status))
-  return(subset(out,status == "Approved"))
-}
+# Read pathway names, gene sets, etc, from the tab-delimited
+# ".hgnc.gmt" text file downloaded from the Pathway Commons website
+# (https://www.pathwaycommons.org).
+read_pathway_commons_data <- function (file, gene_info) {
+  dat <- readLines(file)
+  n   <- length(dat)
 
-# Read the pathway meta data (e.g., pathway names, data sources) from
-# the tab-delimited text file downloaded from the Pathway Commons
-# website (https://www.pathwaycommons.org).
-read_pc_pathway_data <- function (file) {
-  out <- suppressMessages(read_delim(file,delim = "\t",quote = ""))
-  class(out) <- "data.frame"
-  names(out) <- tolower(names(out))
-  out <- out[c("display_name","datasource","pathway_uri")]
-  return(transform(out,datasource = factor(datasource)))
+  # Set up the data frame containing the pathway names and sources.
+  pathways <- data.frame(name        = rep("",n),
+                         data_source = rep("",n),
+                         url         = rep("",n),
+                         stringsAsFactors = FALSE)
+
+  # Repeat for each Pathway Commons pathway.
+  i <- vector("numeric")
+  j <- vector("numeric")
+  for (t in 1:n) {
+
+    # Get the pathway URL.
+    x <- unlist(strsplit(dat[[t]],"\t",fixed = TRUE))
+    pathways[t,"url"] <- x[1]
+
+    # Get the pathway name and source.
+    y <- unlist(strsplit(x[2],";",fixed = TRUE))
+    y <- trimws(unlist(strsplit(y,":",fixed = TRUE)))
+    pathways[t,"name"]        <- y[which(y == "name") + 1]
+    pathways[t,"data_source"] <- y[which(y == "datasource") + 1]
+
+    # Get the pathway-gene associations.
+    x  <- x[-(1:2)]
+    it <- match(x,gene_info$Symbol)
+    it <- it[!is.na(it)]
+    i  <- c(i,it)
+    j  <- c(j,rep(t,length(it)))
+  }
+
+  # Create an n x m sparse, binary matrix, where n is the number of
+  # genes and m is the number of Pathway Commons pathways.
+  gene_sets <- sparseMatrix(i = i,j = j,x = rep(1,length(i)),
+                            dims = c(nrow(gene_info),n))
+  rownames(gene_sets) <- gene_info$GeneID
+  colnames(gene_sets) <- pathways$url
+  
+  # Return the pathway meta-data and the n x m gene-set matrix.
+  pathways <- transform(pathways,data_source = factor(data_source))
+  return(list(pathways = pathways,gene_sets = gene_sets))
 }
