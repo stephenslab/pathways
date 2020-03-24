@@ -1,17 +1,42 @@
 # pathways
 
-Pathway data compiled for gene-set enrichment analyses.
+Pathway data compiled for gene-set enrichment analyses. The pathway
+data are compiled from two sources: [NCBI BioSystems][biosystems] and
+[Pathway Commons][pc].
 
-*Briefly describe pathways.RData here.*
+## Quick Start
 
-*Briefly describe code here.*
+Load the pathway data into R:
+
+```{r}
+library(Matrix)
+load("pathways.RData")
+```
+
+The gene-set data are stored as an n x m sparse matrix, where n =
+61,630 is the number of genes, and m = 6,737 is the number of
+pathways.
+
+```{r}
+nrow(gene_sets)
+ncol(gene_sets)
+```
+
+
+## Source code
+
++ **prepare_pathway_data.R** is the R script used to generate the
+  **pathways.RData** file.
+
++ **read_data.R** contains some function definitions used in the data
+  preparation script.
+
+## Source data
 
 See the **data** directory for data files downloaded from the original
 sources, and the processed data files. Some of the data files are not
 actually included in the git repository because they are large; see
 below for instructions on downloading the data.
-
-## Source data
 
 + **Homo_sapiens.gene_info.gz** is a tab-delimited file containing
   gene information. This file was downloaded from the
@@ -29,6 +54,8 @@ below for instructions on downloading the data.
   pathway data, including gene sets. This file was downloaded from
   [Pathway Commons][pc-12-downloads] on March 20, 2020.
 
+[biosystems]: https://www.ncbi.nlm.nih.gov/biosystems
+[pc]: https://www.pathwaycommons.org
 [ncbi-ftp-gene]: https://ftp.ncbi.nih.gov/gene
 [hgnc]: https://www.genenames.org/download/custom
 [ncbi-ftp-biosystems]: https://ftp.ncbi.nih.gov/pub/biosystems

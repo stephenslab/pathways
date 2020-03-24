@@ -1,4 +1,5 @@
-# TO DO: Explain here what this script does, and how to use it.
+# Script to digest the BioSystems and Pathway Commons pathway data for
+# use in gene-set enrichment analyses.
 library(Matrix)
 library(readr)
 library(tools)
