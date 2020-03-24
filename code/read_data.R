@@ -133,7 +133,7 @@ read_pathway_commons_data <- function (file, gene_info) {
     i  <- c(i,it)
     j  <- c(j,rep(t,length(it)))
   }
-
+  
   # Create an n x m sparse, binary matrix, where n is the number of
   # genes and m is the number of Pathway Commons pathways.
   gene_sets <- sparseMatrix(i = i,j = j,x = rep(1,length(i)),

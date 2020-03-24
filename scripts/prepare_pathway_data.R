@@ -1,6 +1,7 @@
 # TO DO: Explain here what this script does, and how to use it.
 library(Matrix)
 library(readr)
+library(tools)
 source("../code/read_data.R")
 
 # LOAD DATA
@@ -11,9 +12,9 @@ gene_info <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
 
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
-bsid2info        <- read_bsid2info("../data/bsid2info.gz")
-biosys_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
-                                              bsid2info,gene_info)
+bsid2info    <- read_bsid2info("../data/bsid2info.gz")
+bs_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
+                                          bsid2info,gene_info)
 
 # Read and process the Pathway Commons pathway data.
 cat("Reading Pathway Commons data from PathwayCommons12.All.hgnc.gmt.gz.\n")
@@ -24,17 +25,30 @@ pc_gene_sets <- out$gene_sets
 rm(out)
 
 # Combine the BioSystems and Pathway Commons pathway and gene set data.
-# TO DO.
-
+bsid2info   <- cbind(bsid2info,data.frame(database = "BioSystems"))
+pc_pathways <- cbind(pc_pathways,data.frame(database = "PC"))
+names(bsid2info)[1]   <- "id"
+names(pc_pathways)[3] <- "id"
+levels(pc_pathways$data_source) <-
+  c("humancyc","inoh","KEGG","netpath","panther","pathbank",
+    "Pathway Interaction Database","REACTOME")
+pathways  <- merge(bsid2info,pc_pathways,all = TRUE,sort = FALSE,
+                   by = c("name","id","data_source","database"))
+gene_sets <- cbind(bs_gene_sets,pc_gene_sets)
+    
 # Remove any pathways that do not have any genes (or at least any
 # recognizable gene symbols).
-# TO DO.
+i         <- which(colSums(gene_sets > 0) > 0)
+pathways  <- pathways[i,]
+gene_sets <- gene_sets[,i]
     
 # SUMMARIZE DATA
 # --------------
-print(nrow(genes))
-print(summary(pathways$datasource))
+# TO DO.
 
 # WRITE DATA TO FILE
 # ------------------
-# TO DO.
+cat("Saving gene and pathway data to pathways.RData")
+save(list = c("gene_info","pathways","gene_sets"),
+     file = "pathways.RData")
+resaveRdaFiles("pathways.RData")
