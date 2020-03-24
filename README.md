@@ -27,17 +27,17 @@ events pathway from Pathway Commons, run:
 
 ```R
 id <- subset(pathways,
-             name     == "IL12-mediated signaling events" &
-			 database == "BioSystems")$id
+             name == "IL12-mediated signaling events" &
+             database == "BioSystems")$id
 genes <- which(gene_sets[,id] > 0)
 ```
 
 This will give you the row numbers of the `gene_info` table. To look
-up information about these genes, such as the chromosome numbers,
-official gene symbols, and Ensembl idenfiers, do
+up information about these genes, such as the official gene symbols,
+you would do
 
 ```R
-gene_info[genes,c("chromosome","Symbol","Ensembl")]
+gene_info[genes,"Symbol"]
 ```
 
 ## Source code
