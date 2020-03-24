@@ -44,11 +44,15 @@ gene_sets <- gene_sets[,i]
     
 # SUMMARIZE DATA
 # --------------
-# TO DO.
+cat("Number of genes:                    ",nrow(gene_info),"\n")
+cat("Number of BioSystems pathways:      ",
+    sum(pathways$database=="BioSystems"),"\n")
+cat("Number of Pathway Commons pathways: ",sum(pathways$database == "PC"),"\n")
+cat("Total number of pathways:           ",nrow(pathways),"\n")
+cat("Number of gene-pathway associations:",nnzero(gene_sets),"\n")
 
-# WRITE DATA TO FILE
-# ------------------
-cat("Saving gene and pathway data to pathways.RData")
-save(list = c("gene_info","pathways","gene_sets"),
-     file = "pathways.RData")
-resaveRdaFiles("pathways.RData")
+# SAVE PROCESSED DATA
+# -------------------
+cat("Saving gene and pathway data to pathways.RData.\n")
+save(list = c("gene_info","pathways","gene_sets"),file = "pathway.RData")
+resaveRdaFiles("pathway.RData")
