@@ -18,8 +18,7 @@ The gene-set data are stored as an n x m sparse matrix, where n =
 pathways.
 
 ```R
-nrow(gene_sets)
-ncol(gene_sets)
+dim(gene_sets)
 ```
 
 For example, to retrieve the gene set for the IL12-mediated signaling
