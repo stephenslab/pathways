@@ -8,7 +8,7 @@ data are compiled from two sources: [NCBI BioSystems][biosystems] and
 
 Load the pathway data into R:
 
-```{r}
+```R
 library(Matrix)
 load("pathways.RData")
 ```
@@ -17,7 +17,7 @@ The gene-set data are stored as an n x m sparse matrix, where n =
 61,630 is the number of genes, and m = 6,737 is the number of
 pathways.
 
-```{r}
+```R
 nrow(gene_sets)
 ncol(gene_sets)
 ```
