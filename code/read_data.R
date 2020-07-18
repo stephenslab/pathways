@@ -53,6 +53,7 @@ read_bsid2info <- function (file) {
                              "type","scope","tax_id","description"),
                col_types = cols("i","c","c","c","c","c","i","c")))
   class(out) <- "data.frame"
+  # homo sapiens = 9606, mus musculus = 10090
   out <- subset(out,type == "pathway" & tax_id == 9606)
   out <- transform(out,data_source = factor(data_source))
   out <- out[c("bsid","data_source","accession","name")]

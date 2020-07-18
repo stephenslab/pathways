@@ -70,9 +70,21 @@ below for instructions on downloading the data.
   pathway data, including gene sets. This file was downloaded from
   [Pathway Commons][pc-12-downloads] on March 20, 2020.
 
++ **go.obo.gz** contains the full Gene Ontology (GO) ontology data in
+  [OBO format][obo]. This file was downloaded from
+  [Gene Ontology][go-ontology] on July 17, 2020.
+
++ **goa_human.gaf.gz** and **mgi.gaf.gz** contain Gene Ontology (GO)
+  annotations in [GAF format][gaf]. These files were downloaded from
+  [Gene Ontology][go-annotations] on July 17, 2020.
+
 [biosystems]: https://www.ncbi.nlm.nih.gov/biosystems
 [pc]: https://www.pathwaycommons.org
 [ncbi-ftp-gene]: https://ftp.ncbi.nih.gov/gene
 [hgnc]: https://www.genenames.org/download/custom
 [ncbi-ftp-biosystems]: https://ftp.ncbi.nih.gov/pub/biosystems
 [pc-12-downloads]: https://www.pathwaycommons.org/archives/PC2/v12
+[go-ontology]: http://geneontology.org/docs/download-ontology
+[go-annotations]: http://current.geneontology.org/products/pages/downloads.html
+[obo]: http://owlcollab.github.io/oboformat/doc/obo-syntax.html
+[gaf]: http://geneontology.org/docs/go-annotation-file-gaf-format-2.1
