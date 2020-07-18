@@ -54,9 +54,9 @@ sources, and the processed data files. Some of the data files are not
 actually included in the git repository because they are large; see
 below for instructions on downloading the data.
 
-+ **Homo_sapiens.gene_info.gz** is a tab-delimited file containing
-  gene information. This file was downloaded from the
-  [NCBI FTP site][ncbi-ftp-gene] on March 22, 2020.
++ **Homo_sapiens.gene_info.gz** and **Mus_musculus.gene_info.gz** are
+  tab-delimited files containing gene information. These files were
+  downloaded from the [NCBI FTP site][ncbi-ftp-gene] on July 17, 2020.
 
 + **bsid2info.gz** is a tab-delimited text file containing information
   about the NCBI BioSystems pathways. This file was downloaded from
