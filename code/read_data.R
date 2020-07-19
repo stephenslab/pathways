@@ -8,8 +8,9 @@ read_gene_info <- function (file) {
   out <- suppressMessages(read_delim(file,delim = "\t",col_names = TRUE))
   class(out) <- "data.frame"
   dbXrefs    <- out$dbXrefs
-  out        <- out[c("GeneID","Symbol","Synonyms","chromosome")]
-
+  out        <- out[c("#tax_id","GeneID","Symbol","Synonyms","chromosome")]
+  names(out)[1] <- "tax_id"
+  
   # Set any entries with a single hyphen to NA, and convert the
   # "chromosome" column to a factor.
   out$chromosome[out$chromosome == "-"] <- NA
@@ -29,13 +30,14 @@ read_gene_info <- function (file) {
                                 return(as.character(NA))
                           })
 
-  # Extract the HGNC (HUGO Gene Nomenclature Committee) ids.
+  # For human genes, extract the HGNC (HUGO Gene Nomenclature
+  # Committee) ids.
   out$HGNC <- sapply(dbXrefs,function (x) {
                 i <- which(substr(x,1,10) == "HGNC:HGNC:")
                 if (length(i) > 0)
-                  return(substr(x[i[1]],6,nchar(x[i[1]])))
+                  return(as.numeric(substr(x[i[1]],11,nchar(x[i[1]]))))
                 else
-                  return(NA)
+                  return(as.numeric(NA))
               })
 
   # Return the processed gene data.

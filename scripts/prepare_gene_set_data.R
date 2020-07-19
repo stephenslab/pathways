@@ -3,13 +3,21 @@
 library(Matrix)
 library(readr)
 library(tools)
+library(xml2)
 source("../code/read_data.R")
 
 # LOAD DATA
 # ---------
-# Read data from gene_info file.
-cat("Reading gene data from Homo_sapiens.gene_info.gz.\n")
-gene_info <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
+# Read human gene data from the gene_info files.
+cat("Reading human gene data from Homo_sapiens.gene_info.gz.\n")
+gene_info_human <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
+
+# Read mouse gene data from the gene_info files.
+cat("Reading mouse gene data from Mus_musculus.gene_info.gz.\n")
+gene_info_mouse <- read_gene_info("../data/Mus_musculus.gene_info.gz")
+
+# Combine the gene data into one master table.
+gene_info <- rbind(gene_info_human,gene_info_mouse)
 
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")

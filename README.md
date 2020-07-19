@@ -78,7 +78,7 @@ below for instructions on downloading the data.
   Gene Ontology (GO) annotations in [GAF format][gaf]. These files
   were downloaded from [Gene Ontology][go-annotations] on July
   17, 2020.
-
+ 
 + **msigdb_v7.1.xml.gz** and **msigdb.v7.1.entrez.gmt.gz** are text
   files containing information about the MSigDB gene sets. These files
   were downloaded from the [GSEA website][gsea] on July 18, 2020.
