@@ -35,9 +35,9 @@ read_gene_info <- function (file) {
   out$HGNC <- sapply(dbXrefs,function (x) {
                 i <- which(substr(x,1,10) == "HGNC:HGNC:")
                 if (length(i) > 0)
-                  return(as.numeric(substr(x[i[1]],11,nchar(x[i[1]]))))
+                  return(substr(x[i[1]],6,nchar(x[i[1]])))
                 else
-                  return(as.numeric(NA))
+                  return(as.character(NA))
               })
 
   # Return the processed gene data.

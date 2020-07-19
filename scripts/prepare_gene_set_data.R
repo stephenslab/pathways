@@ -1,3 +1,5 @@
+# TO DO: Update this description.
+# 
 # Script to digest the BioSystems and Pathway Commons pathway data for
 # use in gene-set enrichment analyses.
 library(Matrix)
@@ -18,6 +20,10 @@ gene_info_mouse <- read_gene_info("../data/Mus_musculus.gene_info.gz")
 
 # Combine the gene data into one master table.
 gene_info <- rbind(gene_info_human,gene_info_mouse)
+
+# TO DO: Read and process MSigDB gene set data.
+
+# TO DO: Read and process Gene Ontology gene set data.
 
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
