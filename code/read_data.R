@@ -77,9 +77,9 @@ read_biosystems_gene <- function (file) {
 
 # Read the "biosystems_gene" tab-delimited file downloaded from the
 # NCBI FTP site (ftp.ncbi.nih.gov/pub/biosystems), and return an n x m
-# sparse matrix, where n is the number of genes and m is the number of
-# BioSystems pathways. The entries of this sparse matrix are the "scores"
-# assigned the gene-pathway associations.
+# sparse adjacency matrix, where n is the number of genes and m is the
+# number of BioSystems pathways. The entries of this sparse matrix are
+# the "scores" assigned the gene-pathway associations.
 read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
 
   # Read the "biosystems_gene" file, and retain only gene-pathway
@@ -90,8 +90,8 @@ read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
                         is.element(bsid,bsid2info$bsid) &
                         is.element(geneid,gene_info$GeneID))
 
-  # Create an n x m sparse matrix, where n is the number of genes and
-  # m is the number of pathways.
+  # Create the n x m sparse adjacency matrix, where n is the number of
+  # genes and m is the number of pathways.
   out <- with(biosys_gene,
               sparseMatrix(i = match(geneid,gene_info$GeneID),
                            j = match(bsid,bsid2info$bsid),x = score,
@@ -137,8 +137,8 @@ read_pathway_commons_data <- function (file, gene_info) {
     j  <- c(j,rep(t,length(it)))
   }
   
-  # Create an n x m sparse, binary matrix, where n is the number of
-  # genes and m is the number of Pathway Commons pathways.
+  # Create the n x m sparse (binary) adjacency matrix, where n is the
+  # number of genes and m is the number of Pathway Commons pathways.
   gene_sets <- sparseMatrix(i = i,j = j,x = rep(1,length(i)),
                             dims = c(nrow(gene_info),n))
   rownames(gene_sets) <- gene_info$GeneID
