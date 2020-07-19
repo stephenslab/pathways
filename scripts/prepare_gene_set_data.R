@@ -56,7 +56,11 @@ gene_sets <- cbind(bs_gene_sets,pc_gene_sets)
 i         <- which(colSums(gene_sets > 0) > 0)
 pathways  <- pathways[i,]
 gene_sets <- gene_sets[,i]
-    
+
+#
+# TO DO: Remove duplicate gene sets.
+#
+
 # SUMMARIZE DATA
 # --------------
 cat("Number of genes:                    ",nrow(gene_info),"\n")
