@@ -1,7 +1,7 @@
 # An initial attempt at reading in the x
-library(msigdbr)
 library(xml2)
-out <- msigdbr(species = "Homo sapiens")
+library(msigdbr)
+out <- msigdbr(species = "Mus musculus")
 class(out) <- "data.frame"
 
 dat <- readLines("../data/msigdb.v7.1.entrez.gmt.gz")

@@ -74,14 +74,9 @@ below for instructions on downloading the data.
   ontology data in [OBO format][obo]. This file was downloaded from
   [Gene Ontology][go-ontology] on July 17, 2020.
 
-+ **goa_human.gaf.gz** and **mgi.gaf.gz** are text files containing
-  Gene Ontology (GO) annotations in [GAF format][gaf]. These files
-  were downloaded from [Gene Ontology][go-annotations] on July
-  17, 2020.
- 
-+ **msigdb_v7.1.xml.gz** and **msigdb.v7.1.entrez.gmt.gz** are text
-  files containing information about the MSigDB gene sets. These files
-  were downloaded from the [GSEA website][gsea] on July 18, 2020.
++ **msigdb_v7.1.xml.gz** is a text file containing information about
+  the MSigDB gene sets. This file was downloaded from the
+  [GSEA website][gsea] on July 18, 2020.
 
 [biosystems]: https://www.ncbi.nlm.nih.gov/biosystems
 [pc]: https://www.pathwaycommons.org
@@ -89,8 +84,5 @@ below for instructions on downloading the data.
 [hgnc]: https://www.genenames.org/download/custom
 [ncbi-ftp-biosystems]: https://ftp.ncbi.nih.gov/pub/biosystems
 [pc-12-downloads]: https://www.pathwaycommons.org/archives/PC2/v12
-[go-ontology]: http://geneontology.org/docs/download-ontology
-[go-annotations]: http://current.geneontology.org/products/pages/downloads.html
-[obo]: http://owlcollab.github.io/oboformat/doc/obo-syntax.html
 [gaf]: http://geneontology.org/docs/go-annotation-file-gaf-format-2.1
 [gsea]: https://www.gsea-msigdb.org/gsea/downloads.jsp

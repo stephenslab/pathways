@@ -2,8 +2,4 @@ data/Homo_sapiens.gene_info.gz
 data/Mus_musculus.gene_info.gz
 data/bsid2info.gz
 data/biosystems_gene.gz
-data/go.obo.gz
-data/goa_human.gaf.gz
-data/mgi.gaf.gz
-data/msigdb.v7.1.entrez.gmt.gz
 data/msigdb_v7.1.xml.gz
