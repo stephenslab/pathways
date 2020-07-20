@@ -23,8 +23,6 @@ gene_info <- rbind(gene_info_human,gene_info_mouse)
 
 # TO DO: Read and process MSigDB gene set data.
 
-# TO DO: Read and process Gene Ontology gene set data.
-
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
 bsid2info    <- read_bsid2info("../data/bsid2info.gz")

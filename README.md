@@ -70,13 +70,10 @@ below for instructions on downloading the data.
   pathway data, including gene sets. This file was downloaded from
   [Pathway Commons][pc-12-downloads] on March 20, 2020.
 
-+ **go.obo.gz** is a text file containing the full Gene Ontology (GO)
-  ontology data in [OBO format][obo]. This file was downloaded from
-  [Gene Ontology][go-ontology] on July 17, 2020.
-
 + **msigdb_v7.1.xml.gz** is a text file containing information about
   the MSigDB gene sets. This file was downloaded from the
-  [GSEA website][gsea] on July 18, 2020.
+  [GSEA website][gsea] on July 18, 2020. The MSigDB XML format is
+  described [here][msigdb-xml-format].
 
 [biosystems]: https://www.ncbi.nlm.nih.gov/biosystems
 [pc]: https://www.pathwaycommons.org
@@ -86,3 +83,4 @@ below for instructions on downloading the data.
 [pc-12-downloads]: https://www.pathwaycommons.org/archives/PC2/v12
 [gaf]: http://geneontology.org/docs/go-annotation-file-gaf-format-2.1
 [gsea]: https://www.gsea-msigdb.org/gsea/downloads.jsp
+[msigdb-xml-format]: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/MSigDB_XML_description
