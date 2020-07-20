@@ -46,19 +46,21 @@ read_gene_info <- function (file) {
 
 # Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
-# frame with one row per BioSystems pathway, and the following columns:
-# bsid, data_source, accession and name.
-read_bsid2info <- function (file) {
+# frame with one row per BioSystems pathway---limited to pathways for
+# the specified organisms---and the following columns: bsid, tax_id,
+# data_source, accession and name.
+read_bsid2info <- function (file, organisms = c(9606, 10090)) {
   out <- suppressWarnings(
     read_delim(file,delim = "\t",quote = "",progress = FALSE,
                col_names = c("bsid","data_source","accession","name",
                              "type","scope","tax_id","description"),
                col_types = cols("i","c","c","c","c","c","i","c")))
   class(out) <- "data.frame"
-  # homo sapiens = 9606, mus musculus = 10090
-  out <- subset(out,type == "pathway" & tax_id == 9606)
-  out <- transform(out,data_source = factor(data_source))
-  out <- out[c("bsid","data_source","accession","name")]
+  out <- subset(out,type == "pathway" & is.element(tax_id,organisms))
+  out <- out[c("bsid","tax_id","data_source","accession","name")]
+  out <- transform(out,
+                   tax_id      = factor(tax_id),
+                   data_source = factor(data_source))
   rownames(out) <- NULL
   return(out)
 }

@@ -13,8 +13,13 @@ msigdb_info <-
              systematic_name   = extract_attribute(out,"SYSTEMATIC_NAME"),
              category_code     = extract_attribute(out,"CATEGORY_CODE"),
              sub_category_code = extract_attribute(out,"SUB_CATEGORY_CODE"),
+             organism          = extract_attribute(out,"ORGANISM"),
              description_brief = extract_attribute(out,"DESCRIPTION_BRIEF"),
              stringsAsFactors = FALSE)
+msigdb_info <- transform(msigdb_info,
+                         category_code     = factor(category_code),
+                         sub_category_code = factor(sub_category_code),
+                         organism          = factor(organism))
 
 # Get the human and mouse gene-set annotations.
 msigdb_gene_human <- msigdbr(species = "Homo sapiens")
