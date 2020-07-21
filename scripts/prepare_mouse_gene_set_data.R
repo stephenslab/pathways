@@ -42,8 +42,6 @@ gene_set_info <- merge(bsid2info,msigdb_info,all = TRUE,sort = FALSE,
                        by = c("name","id","data_source","database"))
 gene_sets <- cbind(bs_gene_sets,msigdb_gene_sets)
 
-print(summary(gene_set_info))
-
 # Set all nonzeros in the "gene_sets" matrix to be 1.
 gene_sets <- as(gene_sets > 0,"dgCMatrix")
 
