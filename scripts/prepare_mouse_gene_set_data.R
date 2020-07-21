@@ -29,14 +29,6 @@ bsid2info    <- transform(bsid2info,tax_id = factor(tax_id))
 bs_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
                                           bsid2info,gene_info)
 
-# Read and process the Pathway Commons (human) pathway data.
-cat("Reading Pathway Commons data from PathwayCommons12.All.hgnc.gmt.gz.\n")
-out <- read_pathway_commons_data("../data/PathwayCommons12.All.hgnc.gmt.gz",
-                                 gene_info)
-pc_pathways  <- out$pathways
-pc_gene_sets <- out$gene_sets
-rm(out)
-
 # Read and process MSigDB gene set data.
 cat("Extracting MSigDB gene sets using msigdbr package.\n")
 msigdb_gene_sets_human <- get_msigdb_gene_sets(gene_info,"Homo sapiens")

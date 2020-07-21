@@ -48,18 +48,16 @@ read_gene_info <- function (file) {
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
 # frame with one row per BioSystems pathway, and the following
 # columns: bsid, tax_id, data_source, accession and name.
-read_bsid2info <- function (file) {
+read_bsid2info <- function (file, organism = 9606) {
   out <- suppressWarnings(
     read_delim(file,delim = "\t",quote = "",progress = FALSE,
                col_names = c("bsid","data_source","accession","name",
                              "type","scope","tax_id","description"),
                col_types = cols("i","c","c","c","c","c","i","c")))
   class(out) <- "data.frame"
-  out <- subset(out,type == "pathway")
-  out <- out[c("bsid","tax_id","data_source","accession","name")]
-  out <- transform(out,
-                   tax_id      = factor(tax_id),
-                   data_source = factor(data_source))
+  out <- subset(out,type == "pathway" & tax_id == organism)
+  out <- out[c("bsid","data_source","accession","name")]
+  out <- transform(out,data_source = factor(data_source))
   rownames(out) <- NULL
   return(out)
 }
@@ -176,22 +174,42 @@ read_msigdb_xml <- function (file) {
                    organism          = factor(organism)))
 }
 
-# TO DO: Explain here what this script does, and how to use it.
-get_msigdb_gene_sets <- function (gene_info, species) {
+# Read the MSigDB gene set meta-data from the XML data, and extract
+# the MSigDB gene sets using the msigdbr package. The return value is
+# a list with two list elements: "gene_sets", the n x m sparse
+# adjacency matrix of gene sets, where n is the number of genes and m
+# is the number of gene sets; and "info", a data frame with one row
+# per gene set, and with columns "standard_name", "systematic_name",
+# "category_code", "sub_category_code", "organism" and
+# "description_brief".
+get_msigdb_gene_sets <- function (file, gene_info, species) {
+
+  # Read the MSigDB gene set meta-data.
+  info <- read_msigdb_xml(file)
     
   # Get the gene-set annotations.
   x <- msigdbr(species = species)
   class(x) <- "data.frame"
 
-  # Remove gene-set annotations that do have a corresponding gene_info entry.
+  # Remove gene-set annotations that do not have a corresponding
+  # gene_info entry.
   x   <- subset(x,is.element(entrez_gene,gene_info$GeneID))
   ids <- sort(unique(x$gs_id))
 
-  # Create the n x m sparse (binary) adjacency matrix.
-  out <- sparseMatrix(i = match(x$entrez_gene,gene_info$GeneID),
-                      j = match(x$gs_id,ids),x = rep(1,nrow(x)),
-                      dims = c(nrow(gene_info),length(ids)))
-  rownames(out) <- gene_info$GeneID
-  colnames(out) <- ids
-  return(out)
+  # Create an n x m sparse (binary) adjacency matrix from the gene-set
+  # data.
+  gene_sets <- sparseMatrix(i = match(x$entrez_gene,gene_info$GeneID),
+                            j = match(x$gs_id,ids),x = rep(1,nrow(x)),
+                            dims = c(nrow(gene_info),length(ids)))
+  rownames(gene_sets) <- gene_info$GeneID
+  colnames(gene_sets) <- ids
+
+  # Align the rows of "info" with the columns of "gene_sets".
+  info      <- subset(info,is.element(systematic_name,colnames(gene_sets)))
+  cols      <- match(info$systematic_name,colnames(gene_sets))
+  gene_sets <- gene_sets[,cols]
+
+  # Return the gene sets (represented as a sparse matrix) and the
+  # accompanying meta-data ("info").
+  return(list(info = info,gene_sets = gene_sets))
 }
