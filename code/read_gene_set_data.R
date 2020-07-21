@@ -1,15 +1,14 @@
 # Read the "gene_info" tab-delimited text file downloaded from the
 # NCBI FTP site (ftp.ncbi.nih.gov/gene). The return value is a data
-# frame with one row per gene, and the following columns: tax_id,
-# GeneID, Symbol, Synonyms, chromosome, Ensembl and HGNC.
+# frame with one row per gene, and the following columns: GeneID,
+# Symbol, Synonyms, chromosome, Ensembl and HGNC.
 read_gene_info <- function (file) {
 
   # Read the data into a data frame.
   out <- suppressMessages(read_delim(file,delim = "\t",col_names = TRUE))
   class(out) <- "data.frame"
   dbXrefs    <- out$dbXrefs
-  out        <- out[c("#tax_id","GeneID","Symbol","Synonyms","chromosome")]
-  names(out)[1] <- "tax_id"
+  out        <- out[c("GeneID","Symbol","Synonyms","chromosome")]
   
   # Set any entries with a single hyphen to NA, and convert the
   # "chromosome" column to a factor.
@@ -47,7 +46,7 @@ read_gene_info <- function (file) {
 # Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
 # frame with one row per BioSystems pathway, and the following
-# columns: bsid, tax_id, data_source, accession and name.
+# columns: bsid, data_source, accession and name.
 read_bsid2info <- function (file, organism = 9606) {
   out <- suppressWarnings(
     read_delim(file,delim = "\t",quote = "",progress = FALSE,

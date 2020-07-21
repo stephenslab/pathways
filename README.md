@@ -7,46 +7,50 @@ analyses. The gene sets are compiled from three sources:
 
 ## Quick Start
 
-Load the pathway data into R:
+Load the gene set data into R, e.g.,
 
 ```R
 library(Matrix)
-load("pathways.RData")
+load("gene_sets_human.RData")
 ```
 
-The gene-set data are stored as an n x m sparse matrix, where n =
-61,630 is the number of genes, and m = 6,737 is the number of
-pathways.
+The gene-set data are stored as an n x m sparse matrix, where n is the
+number of genes, and m is the number of gene sets. For the human gene
+sets, n = 61,630 and m = 6,737.
 
 ```R
 dim(gene_sets)
 ```
 
-For example, to retrieve the gene set for the IL12-mediated signaling
-events pathway from Pathway Commons, run:
+An entry `gene_sets[i,j]` of sparse matrix is 1 if gene i is annotated
+to gene set j; otherwise, the entry is zero. For example, to retrieve
+the gene set for the IL12-mediated signaling events pathway from the
+BioSystems database, run:
 
 ```R
-id <- subset(pathways,
+id <- subset(gene_set_info,
              name == "IL12-mediated signaling events" &
              database == "BioSystems")$id
 genes <- which(gene_sets[,id] > 0)
 ```
 
-This will give you the row numbers of the `gene_info` table. To look
-up information about these genes, such as the official gene symbols,
-you would do
+This will give you the numbers of the rows in the `gene_info`
+table. To look up information about these genes, such as their
+official symbols, and the Ensembl gene ids, you would do
 
 ```R
-gene_info[genes,"Symbol"]
+gene_info[genes,c("GeneID","Symbol","Ensembl")]
 ```
 
 ## Source code
 
-+ **prepare_pathway_data.R** is the R script used to generate the
-  **pathways.RData** file.
++ **prepare_human_gene_set_data.R** and
+  **prepare_mouse_gene_set_data.R** are the R scripts used to generate
+  the gene set data files, *gene_sets_human.RData** and
+  **gene_sets_mouse.RData**.
 
-+ **read_data.R** contains some function definitions used in the data
-  preparation script.
++ **read_gene_set_data.R** contains some function definitions used in
+  the data preparation scripts.
 
 ## Source data
 

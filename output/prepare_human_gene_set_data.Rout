@@ -1,0 +1,12 @@
+Reading gene data from Homo_sapiens.gene_info.gz.
+Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.
+Reading Pathway Commons data from PathwayCommons12.All.hgnc.gmt.gz.
+Reading MSigDB gene set data from msigdb_v7.1.xml, and
+extracting MSigDB gene sets using msigdbr package.
+Merging gene set data.
+genes:                61631 
+BioSystems gene sets: 2766 
+PC gene sets:         3970 
+MSigDB gene sets:     25724 
+Total gene sets:      32460 
+Saving gene and gene-set data to gene_sets_human.RData.

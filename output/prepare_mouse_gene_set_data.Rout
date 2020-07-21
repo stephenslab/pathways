@@ -1,0 +1,34 @@
+Reading mouse gene data from Mus_musculus.gene_info.gz.
+Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.
+Reading MSigDB gene set data from msigdb_v7.1.xml, and
+extracting MSigDB gene sets using msigdbr package.
+Merging gene set data.
+     name                id              data_source          database    
+ Length:27986       Length:27986       biocyc  :  313   BioSystems: 2272  
+ Class :character   Class :character   kegg    :  402   MSigDB    :25714  
+ Mode  :character   Mode  :character   pid     :   14                     
+                                       reactome: 1543                     
+                                       NA's    :25714                     
+                                                                          
+                                                                          
+  accession         category_code   sub_category_code              organism    
+ Length:27986       C5     :10187   BP       :7526    Danio rerio      :    5  
+ Class :character   C2     : 5529            :5408    Homo sapiens     :21716  
+ Mode  :character   C7     : 4872   CGP      :3297    Macaca mulatta   :    6  
+                    C3     : 3732   MIR:MIRDB:2377    Mus musculus     : 3958  
+                    C4     :  858   MF       :1662    Rattus norvegicus:   29  
+                    (Other):  536   (Other)  :5444    NA's             : 2272  
+                    NA's   : 2272   NA's     :2272                             
+ description_brief 
+ Length:27986      
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   
+                   
+genes:                71981 
+BioSystems gene sets: 2268 
+MSigDB gene sets:     25714 
+Total gene sets:      27982 
+Saving gene and gene-set data to gene_sets_mouse.RData.
