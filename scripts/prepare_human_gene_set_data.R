@@ -36,6 +36,7 @@ msigdb_gene_sets <- out$gene_sets
 rm(out)
 
 # Combine BioSystems, Pathway Commons and MSigDB gene set data.
+cat("Merging gene set data.\n")
 bsid2info   <- cbind(bsid2info,data.frame(database = "BioSystems"))
 pc_pathways <- cbind(pc_pathways,data.frame(database = "PC"))
 msigdb_info <- cbind(msigdb_info,data.frame(data_source = as.character(NA),
@@ -51,26 +52,21 @@ gene_set_info <- merge(gene_set_info,msigdb_info,all = TRUE,sort = FALSE,
                        by = c("name","id","data_source","database"))
 gene_sets <- cbind(bs_gene_sets,pc_gene_sets,msigdb_gene_sets)
 
-stop()
+# Set all nonzeros in the "gene_sets" matrix to be 1.
+gene_sets <- as(gene_sets > 0,"dgCMatrix")
 
-# Remove pathways that do not have any genes (or at least any
-# recognizable gene symbols).
-i             <- which(colSums(gene_sets > 0) > 0)
+# Remove pathways that do not have any genes.
+i             <- which(colSums(gene_sets) > 0)
 gene_set_info <- gene_set_info[i,]
 gene_sets     <- gene_sets[,i]
 
-#
-# TO DO: Set all nonzeros in gene_sets to be 1.
-#
-
 # SUMMARIZE DATA
 # --------------
-cat("genes:                    ",nrow(gene_info),"\n")
-cat("BioSystems pathways:      ",
-    sum(pathways$database=="BioSystems"),"\n")
-cat("Pathway Commons: ",sum(pathways$database == "PC"),"\n")
-cat("MSigDB: ")
-cat("Total number of pathways:           ",nrow(pathways),"\n")
+cat("genes:               ",nrow(gene_info),"\n")
+cat("BioSystems gene sets:",sum(gene_set_info$database == "BioSystems"),"\n")
+cat("PC gene sets:        ",sum(gene_set_info$database == "PC"),"\n")
+cat("MSigDB gene sets:    ",sum(gene_set_info$database == "MSigDB"),"\n")
+cat("Total gene sets:     ",nrow(gene_set_info),"\n")
 
 # SAVE PROCESSED DATA
 # -------------------
