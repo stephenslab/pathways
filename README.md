@@ -16,7 +16,7 @@ load("gene_sets_human.RData")
 
 The gene-set data are stored as an n x m sparse matrix, where n is the
 number of genes, and m is the number of gene sets. For the human gene
-sets, n = 61,630 and m = 6,737.
+sets, n = 61,631 and m = 32,460.
 
 ```R
 dim(gene_sets)
