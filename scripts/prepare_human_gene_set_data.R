@@ -4,7 +4,8 @@ library(Matrix)
 library(readr)
 library(tools)
 library(xml2)
-source("../code/read_data.R")
+library(msigdbr)
+source("../code/read_gene_set_data.R")
 
 # LOAD DATA
 # ---------
@@ -23,6 +24,8 @@ rm(gene_info_human,gene_info_mouse)
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
 bsid2info    <- read_bsid2info("../data/bsid2info.gz")
+bsid2info    <- subset(bsid2info,tax_id == 9606 | tax_id == 10090)
+bsid2info    <- transform(bsid2info,tax_id = factor(tax_id))
 bs_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
                                           bsid2info,gene_info)
 
@@ -34,9 +37,20 @@ pc_pathways  <- out$pathways
 pc_gene_sets <- out$gene_sets
 rm(out)
 
-stop()
+# Read and process MSigDB gene set data.
+cat("Extracting MSigDB gene sets using msigdbr package.\n")
+msigdb_gene_sets_human <- get_msigdb_gene_sets(gene_info,"Homo sapiens")
+msigdb_gene_sets_mouse <- get_msigdb_gene_sets(gene_info,"Mus musculus")
+msigdb_gene_sets       <- cbind(msigdb_gene_sets_human,msigdb_gene_sets_mouse)
+cat("Reading MSigDB gene set data from msigdb_v7.1.xml.\n")
+msigdb_info <- read_msigdb_xml("../data/msigdb_v7.1.xml")
 
-# TO DO: Read and process MSigDB gene set data.
+# Align the rows of msigdb_info with the columns of msigdb_gene_sets.
+msigdb_info <- subset(msigdb_info,
+                      is.element(systematic_name,colnames(msigdb_gene_sets)))
+
+cols <- match(msigdb_info$systematic_name,colnames(msigdb_gene_sets))
+msigdb_gene_sets <- msigdb_gene_sets[,cols]
 
 # Combine the BioSystems, Pathway Commons and MSigDB gene set data.
 bsid2info   <- cbind(bsid2info,data.frame(database = "BioSystems"))
@@ -55,6 +69,8 @@ gene_sets <- cbind(bs_gene_sets,pc_gene_sets)
 i         <- which(colSums(gene_sets > 0) > 0)
 pathways  <- pathways[i,]
 gene_sets <- gene_sets[,i]
+
+# TO DO: Set all nonzeros to be 1.
 
 # TO DO: Remove *duplicate* gene sets.
 

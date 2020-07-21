@@ -1,7 +1,7 @@
 # Read the "gene_info" tab-delimited text file downloaded from the
 # NCBI FTP site (ftp.ncbi.nih.gov/gene). The return value is a data
-# frame with one row per gene, and the following columns: GeneID,
-# Symbol, Synonyms, chromosome, Ensembl and HGNC.
+# frame with one row per gene, and the following columns: tax_id,
+# GeneID, Symbol, Synonyms, chromosome, Ensembl and HGNC.
 read_gene_info <- function (file) {
 
   # Read the data into a data frame.
@@ -46,17 +46,16 @@ read_gene_info <- function (file) {
 
 # Read the "bsid2info" tab-delimited file downloaded from the NCBI FTP
 # site (ftp.ncbi.nih.gov/pub/biosystems). The return value is a data
-# frame with one row per BioSystems pathway---limited to pathways for
-# the specified organisms---and the following columns: bsid, tax_id,
-# data_source, accession and name.
-read_bsid2info <- function (file, organisms = c(9606, 10090)) {
+# frame with one row per BioSystems pathway, and the following
+# columns: bsid, tax_id, data_source, accession and name.
+read_bsid2info <- function (file) {
   out <- suppressWarnings(
     read_delim(file,delim = "\t",quote = "",progress = FALSE,
                col_names = c("bsid","data_source","accession","name",
                              "type","scope","tax_id","description"),
                col_types = cols("i","c","c","c","c","c","i","c")))
   class(out) <- "data.frame"
-  out <- subset(out,type == "pathway" & is.element(tax_id,organisms))
+  out <- subset(out,type == "pathway")
   out <- out[c("bsid","tax_id","data_source","accession","name")]
   out <- transform(out,
                    tax_id      = factor(tax_id),
@@ -71,8 +70,8 @@ read_bsid2info <- function (file, organisms = c(9606, 10090)) {
 # following columns: bsid, geneid and score.
 read_biosystems_gene <- function (file) {
   out <- read_delim(file,delim = "\t",progress = FALSE,
-                            col_names = c("bsid","geneid","score"),
-                            col_types = cols("i","i","i"))
+                    col_names = c("bsid","geneid","score"),
+                    col_types = cols("i","i","i"))
   class(out) <- "data.frame"
   return(out)
 }
@@ -105,7 +104,11 @@ read_biosystems_gene_sets <- function (file, bsid2info, gene_info) {
 
 # Read pathway names, gene sets, etc, from the tab-delimited
 # ".hgnc.gmt" text file downloaded from the Pathway Commons website
-# (https://www.pathwaycommons.org).
+# (https://www.pathwaycommons.org). The return value is a list with
+# two list elements, (1) "pathways", the pathway meta-data (columns:
+# name, data_source, url), and (2) "gene_sets", an n x m sparse
+# adjacency matrix, where n is the number of genes and m is the number
+# of Pathway Commons gene sets.
 read_pathway_commons_data <- function (file, gene_info) {
   dat <- readLines(file)
   n   <- length(dat)
@@ -146,7 +149,49 @@ read_pathway_commons_data <- function (file, gene_info) {
   rownames(gene_sets) <- gene_info$GeneID
   colnames(gene_sets) <- pathways$url
   
-  # Return the pathway meta-data and the n x m gene-set matrix.
+  # Return the pathway meta-data and the n x m adjacency matrix.
   pathways <- transform(pathways,data_source = factor(data_source))
   return(list(pathways = pathways,gene_sets = gene_sets))
+}
+
+# Read the MSigDB gene set meta-data from the XML file. The return
+# value is a data frame with one row per gene set, and with the
+# following columns: standard_name, systematic_name, category_code,
+# sub_category_code, organism and description_brief.
+read_msigdb_xml <- function (file) {
+  out <- read_xml(file)
+  out <- as_list(out)[[1]]
+  extract_attr <- function (dat, attribute)
+    sapply(dat,function (x) attr(x,attribute))
+  out <- data.frame(standard_name     = extract_attr(out,"STANDARD_NAME"),
+                    systematic_name   = extract_attr(out,"SYSTEMATIC_NAME"),
+                    category_code     = extract_attr(out,"CATEGORY_CODE"),
+                    sub_category_code = extract_attr(out,"SUB_CATEGORY_CODE"),
+                    organism          = extract_attr(out,"ORGANISM"),
+                    description_brief = extract_attr(out,"DESCRIPTION_BRIEF"),
+                    stringsAsFactors = FALSE)
+  return(transform(out,
+                   category_code     = factor(category_code),
+                   sub_category_code = factor(sub_category_code),
+                   organism          = factor(organism)))
+}
+
+# TO DO: Explain here what this script does, and how to use it.
+get_msigdb_gene_sets <- function (gene_info, species) {
+    
+  # Get the gene-set annotations.
+  x <- msigdbr(species = species)
+  class(x) <- "data.frame"
+
+  # Remove gene-set annotations that do have a corresponding gene_info entry.
+  x   <- subset(x,is.element(entrez_gene,gene_info$GeneID))
+  ids <- sort(unique(x$gs_id))
+
+  # Create the n x m sparse (binary) adjacency matrix.
+  out <- sparseMatrix(i = match(x$entrez_gene,gene_info$GeneID),
+                      j = match(x$gs_id,ids),x = rep(1,nrow(x)),
+                      dims = c(nrow(gene_info),length(ids)))
+  rownames(out) <- gene_info$GeneID
+  colnames(out) <- ids
+  return(out)
 }

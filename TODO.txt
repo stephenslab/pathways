@@ -1,9 +1,5 @@
 to do
 =====
 
-+ Set up workflowr for this repository.
-
-+ Convert prepare_gene_set_data.R to R Markdown.
-
-+ Move the demo ("Quick Start") from the README to an R Markdown file.
++ Add .Rout outputs to "output" folder.
  
