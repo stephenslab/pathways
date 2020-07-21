@@ -35,27 +35,33 @@ msigdb_info      <- out$info
 msigdb_gene_sets <- out$gene_sets
 rm(out)
 
-stop()
-
-# Combine the BioSystems, Pathway Commons and MSigDB gene set data.
+# Combine BioSystems, Pathway Commons and MSigDB gene set data.
 bsid2info   <- cbind(bsid2info,data.frame(database = "BioSystems"))
 pc_pathways <- cbind(pc_pathways,data.frame(database = "PC"))
-names(bsid2info)[1]   <- "id"
-names(pc_pathways)[3] <- "id"
-levels(pc_pathways$data_source) <-
-  c("humancyc","inoh","KEGG","netpath","panther","pathbank",
-    "Pathway Interaction Database","REACTOME")
-pathways  <- merge(bsid2info,pc_pathways,all = TRUE,sort = FALSE,
-                   by = c("name","id","data_source","database"))
-gene_sets <- cbind(bs_gene_sets,pc_gene_sets)
-    
+msigdb_info <- cbind(msigdb_info,data.frame(data_source = as.character(NA),
+                                            database = "MSigDB"))
+names(bsid2info)[1]        <- "id"
+names(pc_pathways)[3]      <- "id"
+names(msigdb_info)[c(1,2)] <- c("name","id")
+levels(bsid2info$data_source) <- tolower(levels(bsid2info$data_source))
+levels(bsid2info$data_source)[3] <- "pid"
+gene_set_info <- merge(bsid2info,pc_pathways,all = TRUE,sort = FALSE,
+                       by = c("name","id","data_source","database"))
+gene_set_info <- merge(gene_set_info,msigdb_info,all = TRUE,sort = FALSE,
+                       by = c("name","id","data_source","database"))
+gene_sets <- cbind(bs_gene_sets,pc_gene_sets,msigdb_gene_sets)
+
+stop()
+
 # Remove pathways that do not have any genes (or at least any
 # recognizable gene symbols).
-i         <- which(colSums(gene_sets > 0) > 0)
-pathways  <- pathways[i,]
-gene_sets <- gene_sets[,i]
+i             <- which(colSums(gene_sets > 0) > 0)
+gene_set_info <- gene_set_info[i,]
+gene_sets     <- gene_sets[,i]
 
+#
 # TO DO: Set all nonzeros in gene_sets to be 1.
+#
 
 # SUMMARIZE DATA
 # --------------
@@ -68,6 +74,7 @@ cat("Total number of pathways:           ",nrow(pathways),"\n")
 
 # SAVE PROCESSED DATA
 # -------------------
-cat("Saving gene set data to gene_sets_human.RData.\n")
-save(list = c("gene_info","pathways","gene_sets"),file = "gene_sets_human.RData")
+cat("Saving gene and gene-set data to gene_sets_human.RData.\n")
+save(list = c("gene_info","gene_set_info","gene_sets"),
+     file = "gene_sets_human.RData")
 resaveRdaFiles("gene_sets_human.RData")
