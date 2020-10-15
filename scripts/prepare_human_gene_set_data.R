@@ -28,9 +28,9 @@ pc_gene_sets <- out$gene_sets
 rm(out)
 
 # Read and process MSigDB gene set data.
-cat("Reading MSigDB gene set data from msigdb_v7.1.xml, and\n")
+cat("Reading MSigDB gene set data from msigdb_v7.2.xml, and\n")
 cat("extracting MSigDB gene sets using msigdbr package.\n")
-out <- get_msigdb_gene_sets("../data/msigdb_v7.1.xml",gene_info,"Homo sapiens")
+out <- get_msigdb_gene_sets("../data/msigdb_v7.2.xml",gene_info,"Homo sapiens")
 msigdb_info      <- out$info
 msigdb_gene_sets <- out$gene_sets
 rm(out)

@@ -185,7 +185,7 @@ get_msigdb_gene_sets <- function (file, gene_info, species) {
 
   # Read the MSigDB gene set meta-data.
   info <- read_msigdb_xml(file)
-    
+
   # Get the gene-set annotations.
   x <- msigdbr(species = species)
   class(x) <- "data.frame"

@@ -22,9 +22,9 @@ bs_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
                                           bsid2info,gene_info)
 
 # Read and process MSigDB gene set data.
-cat("Reading MSigDB gene set data from msigdb_v7.1.xml, and\n")
+cat("Reading MSigDB gene set data from msigdb_v7.2.xml, and\n")
 cat("extracting MSigDB gene sets using msigdbr package.\n")
-out <- get_msigdb_gene_sets("../data/msigdb_v7.1.xml",gene_info,"Mus musculus")
+out <- get_msigdb_gene_sets("../data/msigdb_v7.2.xml",gene_info,"Mus musculus")
 msigdb_info      <- out$info
 msigdb_gene_sets <- out$gene_sets
 rm(out)

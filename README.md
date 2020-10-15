@@ -16,7 +16,7 @@ load("gene_sets_human.RData")
 
 The gene-set data are stored as an n x m sparse matrix, where n is the
 number of genes, and m is the number of gene sets. For the human gene
-sets, n = 61,631 and m = 32,460.
+sets, n = 61,676 and m = 37,856.
 
 ```R
 dim(gene_sets)
@@ -61,7 +61,8 @@ below for instructions on downloading the data.
 
 + **Homo_sapiens.gene_info.gz** and **Mus_musculus.gene_info.gz** are
   tab-delimited files containing gene information. These files were
-  downloaded from the [NCBI FTP site][ncbi-ftp-gene] on July 17, 2020.
+  downloaded from the [NCBI FTP site][ncbi-ftp-gene] on October
+  15, 2020.
 
 + **bsid2info.gz** is a tab-delimited text file containing information
   about the NCBI BioSystems pathways. This file was downloaded from
@@ -76,10 +77,10 @@ below for instructions on downloading the data.
   downloaded from [Pathway Commons][pc-12-downloads] on March
   20, 2020.
 
-+ **msigdb_v7.1.xml.gz** is an XML file containing information about
++ **msigdb_v7.2.xml.gz** is an XML file containing information about
   the MSigDB gene sets. This file was downloaded from
-  [here][msigdb-download] on July 18, 2020. The MSigDB XML format is
-  described [here][msigdb-xml-format].
+  [here][msigdb-download] on October 15, 2020. The MSigDB XML format
+  is described [here][msigdb-xml-format].
 
 [biosystems]: https://www.ncbi.nlm.nih.gov/biosystems
 [pc]: https://www.pathwaycommons.org
