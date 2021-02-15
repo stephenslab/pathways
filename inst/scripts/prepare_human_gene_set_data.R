@@ -11,17 +11,18 @@ source("../code/read_gene_set_data.R")
 # ---------
 # Read gene data from the gene_info files.
 cat("Reading gene data from Homo_sapiens.gene_info.gz.\n")
-gene_info <- read_gene_info("../data/Homo_sapiens.gene_info.gz")
+gene_info <- read_gene_info("../datafiles/Homo_sapiens.gene_info.gz")
 
 # Read and process the BioSystems pathway data.
 cat("Reading BioSystems data from bsid2info.gz and biosystems_gene.gz.\n")
-bsid2info    <- read_bsid2info("../data/bsid2info.gz",organism = 9606)
-bs_gene_sets <- read_biosystems_gene_sets("../data/biosystems_gene.gz",
+bsid2info    <- read_bsid2info("../datafiles/bsid2info.gz",organism = 9606)
+bs_gene_sets <- read_biosystems_gene_sets("../datafiles/biosystems_gene.gz",
                                           bsid2info,gene_info)
 
 # Read and process the Pathway Commons pathway data.
 cat("Reading Pathway Commons data from PathwayCommons12.All.hgnc.gmt.gz.\n")
-out <- read_pathway_commons_data("../data/PathwayCommons12.All.hgnc.gmt.gz",
+out <- read_pathway_commons_data(file.path("../datafiles",
+                                           "PathwayCommons12.All.hgnc.gmt.gz"),
                                  gene_info)
 pc_pathways  <- out$pathways
 pc_gene_sets <- out$gene_sets
@@ -30,7 +31,8 @@ rm(out)
 # Read and process MSigDB gene set data.
 cat("Reading MSigDB gene set data from msigdb_v7.2.xml, and\n")
 cat("extracting MSigDB gene sets using msigdbr package.\n")
-out <- get_msigdb_gene_sets("../data/msigdb_v7.2.xml",gene_info,"Homo sapiens")
+out <- get_msigdb_gene_sets("../datafiles/msigdb_v7.2.xml",gene_info,
+                            "Homo sapiens")
 msigdb_info      <- out$info
 msigdb_gene_sets <- out$gene_sets
 rm(out)
