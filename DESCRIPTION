@@ -3,15 +3,25 @@ Type: Package
 Package: pathways
 Version: 0.1-1
 Date: 2021-02-15
-Title: Fast Algorithms for Fitting Topic Models and Non-Negative
-    Matrix Factorizations to Count Data
+Title: Human and House Gene Sets and Gene Set Enrichment Analysis
 Authors@R: c(person("Peter","Carbonetto",role=c("aut","cre"),
                     email="peter.carbonetto@gmail.com"),
              person("Matthew","Stephens",role="aut"))
 URL: https://github.com/stephenslab/pathways
 BugReports: https://github.com/stephenslab/pathways/issues
-Description: Add description here.
+Description: Human and mouse gene sets compiled for gene set
+  enrichment analysis, and a simple interface for performing gene set
+  enrichment analysis using fgsea. The gene sets are compiled from
+  NCBI BioSystems, Pathway Commons and MSigDB.
+Imports:
+    fgsea
+Suggests:
+    Matrix,
+    tools,
+    xml2,
+    readr,
+    msigdbr
+Add description here.
 License: MIT + file LICENSE
 LazyData: true
 NeedsCompilation: no
-
