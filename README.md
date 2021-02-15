@@ -44,13 +44,13 @@ gene_info[genes,c("GeneID","Symbol","Ensembl")]
 
 ## Source code
 
-+ **prepare_human_gene_set_data.R** and
-  **prepare_mouse_gene_set_data.R** are the R scripts used to generate
-  the gene set data files, *gene_sets_human.RData** and
++ **inst/scripts/prepare_human_gene_set_data.R** and
+  **inst/scripts/prepare_mouse_gene_set_data.R** are the R scripts used
+  to generate the gene set data files, *gene_sets_human.RData** and
   **gene_sets_mouse.RData**.
 
-+ **read_gene_set_data.R** contains some function definitions used in
-  the data preparation scripts.
++ **inst/code/read_gene_set_data.R** contains some functions
+  used in the data preparation scripts.
 
 ## Source data
 

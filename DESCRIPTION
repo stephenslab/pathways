@@ -1,0 +1,17 @@
+Encoding: UTF-8
+Type: Package
+Package: pathways
+Version: 0.1-1
+Date: 2021-02-15
+Title: Fast Algorithms for Fitting Topic Models and Non-Negative
+    Matrix Factorizations to Count Data
+Authors@R: c(person("Peter","Carbonetto",role=c("aut","cre"),
+                    email="peter.carbonetto@gmail.com"),
+             person("Matthew","Stephens",role="aut"))
+URL: https://github.com/stephenslab/pathways
+BugReports: https://github.com/stephenslab/pathways/issues
+Description: Add description here.
+License: MIT + file LICENSE
+LazyData: true
+NeedsCompilation: no
+
