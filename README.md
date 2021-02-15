@@ -42,22 +42,20 @@ official symbols, and the Ensembl gene ids, you would do
 gene_info[genes,c("GeneID","Symbol","Ensembl")]
 ```
 
-## Source code
+## Other notes
 
-+ **inst/scripts/prepare_human_gene_set_data.R** and
-  **inst/scripts/prepare_mouse_gene_set_data.R** are the R scripts used
-  to generate the gene set data files, *gene_sets_human.RData** and
-  **gene_sets_mouse.RData**.
++ `inst/scripts/prepare_human_gene_set_data.R` and
+  `inst/scripts/prepare_mouse_gene_set_data.R` are the R scripts used
+  to generate the gene set data files.
 
-+ **inst/code/read_gene_set_data.R** contains some functions
++ `inst/code/read_gene_set_data.R` contains some functions
   used in the data preparation scripts.
 
-## Source data
-
-See the **data** directory for data files downloaded from the original
-sources, and the processed data files. Some of the data files are not
-actually included in the git repository because they are large; see
-below for instructions on downloading the data.
++ See the `inst/datafiles` directory for data files downloaded from
+  their original sources as well as somethe processed data files. Some 
+  of the data files are not actually included in the git repository
+  because they are large; see below for instructions on downloading the
+  data.
 
 + **Homo_sapiens.gene_info.gz** and **Mus_musculus.gene_info.gz** are
   tab-delimited files containing gene information. These files were
