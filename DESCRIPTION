@@ -1,9 +1,9 @@
 Encoding: UTF-8
 Type: Package
 Package: pathways
-Version: 0.1-1
+Version: 0.1-2
 Date: 2021-02-15
-Title: Human and House Gene Sets and Gene Set Enrichment Analysis
+Title: Gene Set Enrichment Analysis Using Human and Mouse Gene Sets
 Authors@R: c(person("Peter","Carbonetto",role=c("aut","cre"),
                     email="peter.carbonetto@gmail.com"),
              person("Matthew","Stephens",role="aut"))
@@ -14,14 +14,16 @@ Description: Human and mouse gene sets compiled for gene set
   enrichment analysis using fgsea. The gene sets are compiled from
   NCBI BioSystems, Pathway Commons and MSigDB.
 Imports:
-    fgsea
+    fgsea,
+    plotly
 Suggests:
     Matrix,
     tools,
     xml2,
     readr,
     msigdbr
-Add description here.
 License: MIT + file LICENSE
 LazyData: true
 NeedsCompilation: no
+Remotes: ctlab/fgsea
+RoxygenNote: 7.1.1
