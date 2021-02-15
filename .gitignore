@@ -1,5 +1,3 @@
-data/Homo_sapiens.gene_info.gz
-data/Mus_musculus.gene_info.gz
-data/bsid2info.gz
-data/biosystems_gene.gz
-data/msigdb_v7.2.xml.gz
+inst/datafiles/bsid2info.gz
+inst/datafiles/biosystems_gene.gz
+inst/datafiles/msigdb_v7.2.xml.gz
