@@ -13,7 +13,7 @@
   \item{gene_info}{Data frame containing information on human
     genes, including gene symbols and Ensembl ids.}
 
-  \item{gene_set_info}{Data frame contaiing information on gene
+  \item{gene_set_info}{Data frame containing information on gene
     sets, including gene set name, id and database of origin.}
 
   \item{gene_sets}{Gene sets encoded as a 61,676 x 37,856 sparse
