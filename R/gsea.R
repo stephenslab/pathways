@@ -1,46 +1,74 @@
-#' @title Add Title Here
+#' @title Perform Gene Set Enrichment Analysis
 #'
 #' @description Add description here.
 #'
-#' @param gene_sets Describe input argument "gene_sets" here.
+#' @param gene_sets Gene set data encoded as an n x m binary matrix,
+#'   where n is the number of gene sets and m is the number of genes:
+#'   \code{gene_sets[i,j] = 1} if gene j is included in gene set i;
+#'   otherwise, \code{gene_sets[i,j] = 0}. The rows and columns should
+#'   be named. and Columns of \code{gene_sets} matching with rows of
+#'   \code{Z} will be used in the enrichment analysis.
 #'
-#' @param Z Describe input argument "Z" here.
+#' @param Z Matrix of gene-level statistics such as z-scores, with
+#'   rows corresponding to genes. An enrichment analysis is performed
+#'   for each column of \code{Z}. The rows and columns should be named,
+#'   and rows of \code{Z} matching with columns of \code{gene_sets} will
+#'   be used in the enrichment analysis.
 #'
-#' @param verbose Describe input argument "verbose" here.
+#' @param verbose When \code{verbose = TRUE}, information about the
+#'   progress of the gene set enrichment analysis is printed to the
+#'   console.
 #' 
-#' @param eps Describe input argument "eps" here.
+#' @param eps The lower bound for calculating p-values; smaller values
+#'   of \code{eps} may give more accurate p-values at the possible cost
+#'   of slightly longer computation. Passed as the \code{eps} input to
+#'   \code{\link[fgsea]{fgsea}}.
 #'
-#' @param nproc Describe input argument "nproc" here.
+#' @param nproc Number of workers used to run gene set enrichment
+#'   analysis. Passed as the \code{nproc} input to
+#'   \code{\link[fgsea]{fgsea}}.
 #'
-#' @param \dots Describe dots (...) here.
+#' @param \dots Additional arguments passed to
+#'   \code{\link[fgsea]{fgsea}}.
 #' 
 #' @return Describe return value here.
 #'
 #' @examples
 #' # Add an example here.
 #' 
+#' @importFrom fgsea fgsea
+#' 
 #' @export 
 #' 
 perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
-                          nproc = 1, ...) {
+                          nproc = 0, ...) {
 
+  # Check the "gene_sets" and "Z" inputs.
+  if (!(is.matrix(gene_sets) | inherits(gene_sets,"Matrix")) & is.matrix(Z) &
+        !is.null(rownames(gene_sets)) & !is.null(colnames(gene_sets)) &
+        !is.null(rownames(Z)) & !is.null(colnames(Z)))
+    stop("Input arguments \"gene_sets\" and \"Z\" should be matrices with ",
+         "named rows and columns")
+    
   # Get the number of gene sets (n) and the number of columns in Z (k).
   n <- ncol(gene_sets)
   k <- ncol(Z)
-  if (verbose) {
-    cat("Computing enrichment statistics for",n,"gene sets and")
-    cat(k,"collections of gene-wise statistics:")
-  }
-  if (is.null(colnames(Z)))
-    colnames(Z) <- paste0("k",1:k)
 
-  browser()
-  
   # Align the gene and gene set data.
   out       <- align_by_rownames(gene_sets,Z)
   gene_sets <- out$A
   Z         <- out$Z
+  if (nrow(Z) == 0)
+    stop("Failed to align gene_sets and Z by rownames.")
+  if (verbose)
+    cat("Using statistics from",nrow(Z),"genes for enrichment analysis.\n")
   
+  # Convert the gene sets binary adjacency matrix into the format
+  # accepted by fgsea.
+  if (verbose)
+    cat("Converting gene set data for fgsea.\n")
+  pathways <- matrix2pathways(gene_sets)
+
   # Initialize the outputs.
   out <- list(pval    = matrix(0,n,k),
               log2err = matrix(0,n,k),
@@ -56,13 +84,30 @@ perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
   colnames(out$NES)     <- colnames(Z)
   
   # Run the gene set enrichment analysis for each column of Z.
+  if (verbose) {
+    cat("Computing enrichment statistics for",n,"gene sets and\n")
+    cat(k,"collections of gene-level statistics:\n")
+  }
   for (i in 1:k) {
     if (verbose) {
       if (i > 1)
         cat(", ")
-      cat(rownames(Z)[i])
+      cat(colnames(Z)[i])
     }
-    ans             <- perform_gsea_helper(gene_sets,Z[,i],eps,nproc,...)
+
+    browser()
+    
+    # Perform gene set enrichment analysis using fgsea.
+    ans <- suppressWarnings(fgsea(pathways,Z[,i],eps = eps,nproc = nproc,...))
+    class(ans) <- "data.frame"
+
+    # TO DO: Explain here what these lines of code do.
+    rownames(ans) <- ans$pathway
+    ans <- ans[c("pval","log2err","ES","NES")]
+    ans <- ans[colnames(gene_sets),]
+    ans[is.na(ans$log2err),] <- NA
+
+    # TO DO; Explain here what these lines of code do.
     out$pval[,i]    <- ans$pval
     out$log2err[,i] <- ans$log2err
     out$ES[,i]      <- ans$ES
@@ -77,22 +122,10 @@ perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
 
 # TO DO: Explain what this function does, and how to use it.
 #  
-#' @importFrom fgsea fgsea
-perform_gsea_helper <- function (gene_sets, z, eps = 1e-32, nproc = 1, ...) {
+perform_gsea_helper <- function (pathways, z, eps = 1e-32, nproc = 1, ...) {
 
-  # Convert the gene sets adjacency matrix into the format accepted by
-  # fgsea.
-  pathways <- matrix2pathways(gene_sets)
-
-  # Perform gene set enrichment analysis using fgsea.
-  out <- suppressWarnings(fgsea(pathways,z,eps = eps,nproc = nproc,...))
-  class(out) <- "data.frame"
-
-  # TO DO: Explain here what these lines of code go.
-  rownames(out) <- out$pathway
-  out <- out[c("pval","log2err","ES","NES")]
-  out <- out[colnames(gene_sets),]
-  out[is.na(out$log2err),] <- NA
+  browser()
+    
   return(out)
 }
 

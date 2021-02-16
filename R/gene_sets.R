@@ -21,9 +21,10 @@
 #'     "description_brief" are only used for the MSigDB gene sets.}
 #'
 #'   \item{gene_sets}{Gene sets encoded as a 61,676 x 37,856 sparse
-#'     binary matrix, in which gene_sets[i,j] = 1 if gene j is included in
-#'     gene set i; otherwise, gene_sets[i,j] = 0. The row names are the
-#'     gene Ensembl ids, and the column names are the pathway ids.}}
+#'     binary matrix, in which \code{gene_sets[i,j] = 1} if gene j is
+#'     included in gene set i; otherwise, \code{gene_sets[i,j] = 0}. The
+#'     row names are the gene Ensembl ids, and the column names are the
+#'     pathway ids.}}
 #'
 #' @keywords data
 #'
@@ -52,9 +53,10 @@ NULL
 #'     "description_brief" are only used for the MSigDB gene sets.}
 #'
 #'   \item{gene_sets}{Gene sets encoded as a 73,202 x 33,380 sparse
-#'     binary matrix, in which gene_sets[i,j] = 1 if gene j is included 
-#'     in gene set i; otherwise, gene_sets[i,j] = 0. The row names are the
-#'     gene Ensembl ids, and the column names are the pathway ids.}}
+#'     binary matrix, in which \code{gene_sets[i,j] = 1} if gene j is
+#'     included in gene set i; otherwise, \code{gene_sets[i,j] = 0}. The
+#'     row names are the gene Ensembl ids, and the column names are the
+#'     pathway ids.}}
 #'
 #' @keywords data
 #'

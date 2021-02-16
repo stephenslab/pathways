@@ -2,22 +2,39 @@
 % Please edit documentation in R/gsea.R
 \name{perform_gsea}
 \alias{perform_gsea}
-\title{Add Title Here}
+\title{Perform Gene Set Enrichment Analysis}
 \usage{
-perform_gsea(gene_sets, Z, verbose = TRUE, eps = 1e-32, nproc = 1, ...)
+perform_gsea(gene_sets, Z, verbose = TRUE, eps = 1e-32, nproc = 0, ...)
 }
 \arguments{
-\item{gene_sets}{Describe input argument "gene_sets" here.}
+\item{gene_sets}{Gene set data encoded as an n x m binary matrix,
+where n is the number of gene sets and m is the number of genes:
+\code{gene_sets[i,j] = 1} if gene j is included in gene set i;
+otherwise, \code{gene_sets[i,j] = 0}. The rows and columns should
+be named. and Columns of \code{gene_sets} matching with rows of
+\code{Z} will be used in the enrichment analysis.}
 
-\item{Z}{Describe input argument "Z" here.}
+\item{Z}{Matrix of gene-level statistics such as z-scores, with
+rows corresponding to genes. An enrichment analysis is performed
+for each column of \code{Z}. The rows and columns should be named,
+and rows of \code{Z} matching with columns of \code{gene_sets} will
+be used in the enrichment analysis.}
 
-\item{verbose}{Describe input argument "verbose" here.}
+\item{verbose}{When \code{verbose = TRUE}, information about the
+progress of the gene set enrichment analysis is printed to the
+console.}
 
-\item{eps}{Describe input argument "eps" here.}
+\item{eps}{The lower bound for calculating p-values; smaller values
+of \code{eps} may give more accurate p-values at the possible cost
+of slightly longer computation. Passed as the \code{eps} input to
+\code{\link[fgsea]{fgsea}}.}
 
-\item{nproc}{Describe input argument "nproc" here.}
+\item{nproc}{Number of workers used to run gene set enrichment
+analysis. Passed as the \code{nproc} input to
+\code{\link[fgsea]{fgsea}}.}
 
-\item{\dots}{Describe dots (...) here.}
+\item{\dots}{Additional arguments passed to
+\code{\link[fgsea]{fgsea}}.}
 }
 \value{
 Describe return value here.

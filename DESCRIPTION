@@ -1,8 +1,8 @@
 Encoding: UTF-8
 Type: Package
 Package: pathways
-Version: 0.1-7
-Date: 2021-02-15
+Version: 0.1-8
+Date: 2021-02-16
 Title: Gene Set Enrichment Analysis Using Human and Mouse Gene Sets
 Authors@R: c(person("Peter","Carbonetto",role=c("aut","cre"),
                     email="peter.carbonetto@gmail.com"),
