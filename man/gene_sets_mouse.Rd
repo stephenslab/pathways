@@ -20,7 +20,8 @@
 
   \item{gene_sets}{Gene sets encoded as a 73,202 x 33,380 sparse
     binary matrix, in which gene_sets[i,j] = 1 if gene j is included 
-    in gene set i; otherwise, gene_sets[i,j] = 0.}}
+    in gene set i; otherwise, gene_sets[i,j] = 0. The row names are the
+    gene Ensembl ids, and the column names are the pathway ids.}}
 }
 \description{
 33,380 gene sets compiled from NCBI BioSystems,

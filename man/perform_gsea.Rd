@@ -4,13 +4,26 @@
 \alias{perform_gsea}
 \title{Add Title Here}
 \usage{
-perform_gsea()
+perform_gsea(gene_sets, Z, verbose = TRUE, eps = 1e-32, nproc = 1, ...)
+}
+\arguments{
+\item{gene_sets}{Describe input argument "gene_sets" here.}
+
+\item{Z}{Describe input argument "Z" here.}
+
+\item{verbose}{Describe input argument "verbose" here.}
+
+\item{eps}{Describe input argument "eps" here.}
+
+\item{nproc}{Describe input argument "nproc" here.}
+
+\item{\dots}{Describe dots (...) here.}
 }
 \value{
 Describe return value here.
 }
 \description{
-Add description here
+Add description here.
 }
 \examples{
 # Add an example here.

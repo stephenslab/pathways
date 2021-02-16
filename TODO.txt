@@ -3,4 +3,10 @@ to do
 
 + Update README.
 
-+ Create example gene-wide test statistics from single-cell data.
++ Fill out roxygen2 docs for pbmc_facs_z.
+
++ Fill out roxygen2 docs for perform_gsea.
+
++ Implement gsea_plotly.
+
++ Filll out roxygen2 docs for gsea_plotly.
