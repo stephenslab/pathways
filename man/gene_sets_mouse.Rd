@@ -3,7 +3,7 @@
 \docType{data}
 \name{gene_sets_mouse}
 \alias{gene_sets_mouse}
-\title{Title Goes Here}
+\title{Mouse Gene Sets}
 \format{
 \code{gene_sets_mouse} is a list with the following
   list elements:
@@ -15,6 +15,7 @@
 }
 }
 \description{
-Add description here.
+37,856 mouse sets compiled from NCBI BioSystems,
+  Pathway Commons and MSigDB databases.
 }
 \keyword{data}
