@@ -1,7 +1,6 @@
 to do
 =====
 
-+ Fill out DESCRIPTION.
-
 + Update README.
 
++ Create example gene-wide test statistics from single-cell data.

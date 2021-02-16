@@ -19,8 +19,8 @@
 #'     sets, including gene set name, id and database of origin.}
 #'
 #'   \item{gene_sets}{Gene sets encoded as a 61,676 x 37,856 sparse
-#'     matrix, in which gene_sets[i,j] = 1 if gene j belongs to gene set
-#'     i; otherwise, gene_sets[i,j] = 0.}}
+#'     matrix, in which gene_sets[i,j] = 1 if gene j is included in gene
+#'     set i; otherwise, gene_sets[i,j] = 0.}}
 #'
 #' @keywords data
 #'
@@ -47,8 +47,8 @@ NULL
 #'     sets, including gene set name, id and database of origin.}
 #'
 #'   \item{gene_sets}{Gene sets encoded as a 73,202 33,380 sparse
-#'     matrix, in which gene_sets[i,j] = 1 if gene j belongs to gene set
-#'     i; otherwise, gene_sets[i,j] = 0.}}
+#'     matrix, in which gene_sets[i,j] = 1 if gene j is included in gene
+#'     set i; otherwise, gene_sets[i,j] = 0.}}
 #'
 #' @keywords data
 #'
