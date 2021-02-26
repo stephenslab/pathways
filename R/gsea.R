@@ -95,19 +95,20 @@ perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
       cat(colnames(Z)[i])
     }
 
-    browser()
-    
     # Perform gene set enrichment analysis using fgsea.
     ans <- suppressWarnings(fgsea(pathways,Z[,i],eps = eps,nproc = nproc,...))
     class(ans) <- "data.frame"
 
-    # TO DO: Explain here what these lines of code do.
+    # Refactor the outputs as a data frame with one row per gene set,
+    # and the following columns: pval, log2err, ES and NES. The
+    # outputs are set to mising (NA) whenever the expected error
+    # (log2err) is also NA.
     rownames(ans) <- ans$pathway
     ans <- ans[c("pval","log2err","ES","NES")]
     ans <- ans[colnames(gene_sets),]
     ans[is.na(ans$log2err),] <- NA
 
-    # TO DO; Explain here what these lines of code do.
+    # Store the fgsea results.
     out$pval[,i]    <- ans$pval
     out$log2err[,i] <- ans$log2err
     out$ES[,i]      <- ans$ES
@@ -117,15 +118,6 @@ perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
     cat("\n")
 
   # Output the results of the gene set enrichment analyses.
-  return(out)
-}
-
-# TO DO: Explain what this function does, and how to use it.
-#  
-perform_gsea_helper <- function (pathways, z, eps = 1e-32, nproc = 1, ...) {
-
-  browser()
-    
   return(out)
 }
 
