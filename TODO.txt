@@ -8,8 +8,8 @@ to do
 
 + Implement gsea_plotly.
 
-+ Fill out roxygen2 docs for pbmc_facs_z.
-
 + Fill out roxygen2 docs for perform_gsea.
 
 + Fill out roxygen2 docs for gsea_plotly.
+
++ Implement perform_gsea example(s).
