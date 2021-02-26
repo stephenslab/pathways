@@ -10,5 +10,3 @@ to do
 + Fill out roxygen2 docs for perform_gsea.
 
 + Fill out roxygen2 docs for gsea_plotly.
-
-+ Create example(s) for perform_gsea.

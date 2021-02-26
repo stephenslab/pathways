@@ -3,4 +3,6 @@
 export(gsea_plotly)
 export(perform_gsea)
 importFrom(fgsea,fgsea)
+importFrom(plotly,add_trace)
+importFrom(plotly,layout)
 importFrom(plotly,plot_ly)

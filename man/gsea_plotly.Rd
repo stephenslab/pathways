@@ -14,6 +14,21 @@ gsea_plotly(
   title = NULL
 )
 }
+\arguments{
+\item{gsea_res}{Describe input argument "gsea_res" here.}
+
+\item{gene_set_info}{Describe input argument "gene_set_info" here.}
+
+\item{k}{Describe input argument "k" here.}
+
+\item{margin}{Describe input argument "margin" here.}
+
+\item{height}{Describe input argument "height" here.}
+
+\item{width}{Describe input argument "width" here.}
+
+\item{title}{Describe input argument "title" here.}
+}
 \value{
 Describe return value here.
 }
