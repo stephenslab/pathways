@@ -1,8 +1,7 @@
-#' @title Perform Gene Set Enrichment Analysis  
+#' @title Perform Gene Set Enrichment Analysis
 #'
 #' @description A simple interface for performing gene set enrichment
-#'   analysis on multiple collections of gene-level statistics using
-#'   fgsea.
+#'   analysis on multiple collections of gene-level statistics.
 #'
 #' @param gene_sets Gene set data encoded as an n x m binary matrix,
 #'   where n is the number of gene sets and m is the number of genes:
@@ -38,20 +37,21 @@
 #' gene sets and k is the number of columns in \code{Z}. The matrices
 #' give the p-values (pval), enrichment scores (ES), normalized
 #' enrichment scores (NES), and expected errors (log2err). See
-#' \code{\link[fgsea]{fgseaMultilevel}} for more details about these
-#' outputs.
+#' \code{\link[fgsea]{fgseaMultilevel}} for more information about
+#' these outputs.
 #'
 #' @examples
-#' # Add comments here.
+#' # Load the gene sets and the results of the differential
+#' # expression analysis.
 #' data(gene_sets_human)
 #' data(pbmc_facs_z)
 #'
-#' # Add comments here.
-#' gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z,
-#'                          nproc = 4)
+#' # Perform the gene set enrichment analysis using fgsea.
+#' gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z)
 #'
 #' # Add comments here.
-#' gsea_plotly(gsea_res,gene_sets_human$gene_set_info,1)
+#' gsea_plotly(gsea_res,gene_sets_human$gene_set_info,"B",
+#'             file = "gsea_b_cells.html",title = "B cells")
 #'
 #' @import Matrix
 #' @importFrom fgsea fgsea

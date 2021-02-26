@@ -8,10 +8,12 @@ gsea_plotly(
   gsea_res,
   gene_set_info,
   k,
-  margin = 1,
+  file,
   height = 675,
   width = 800,
-  title = NULL
+  title = NULL,
+  min_pval = 1,
+  max_name_len = 44
 )
 }
 \arguments{
@@ -21,13 +23,17 @@ gsea_plotly(
 
 \item{k}{Describe input argument "k" here.}
 
-\item{margin}{Describe input argument "margin" here.}
+\item{file}{Describe input argument "file" here.}
 
 \item{height}{Describe input argument "height" here.}
 
 \item{width}{Describe input argument "width" here.}
 
 \item{title}{Describe input argument "title" here.}
+
+\item{min_pval}{Describe input argument "min_pval" here.}
+
+\item{max_name_len}{Describe input argument "max_name_len" here.}
 }
 \value{
 Describe return value here.
