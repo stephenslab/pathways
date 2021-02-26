@@ -1,18 +1,20 @@
-#' @title Perform Gene Set Enrichment Analysis
+#' @title Perform Gene Set Enrichment Analysis  
 #'
-#' @description Add description here.
+#' @description A simple interface for performing gene set enrichment
+#'   analysis on multiple collections of gene-level statistics using
+#'   fgsea.
 #'
 #' @param gene_sets Gene set data encoded as an n x m binary matrix,
 #'   where n is the number of gene sets and m is the number of genes:
-#'   \code{gene_sets[i,j] = 1} if gene j is included in gene set i;
-#'   otherwise, \code{gene_sets[i,j] = 0}. The rows and columns should
-#'   be named. and Columns of \code{gene_sets} matching with rows of
-#'   \code{Z} will be used in the enrichment analysis.
+#'   \code{gene_sets[i,j] = 1} if and only if gene i is included in gene
+#'   set j, and otherwise \code{gene_sets[i,j] = 0}. The rows and
+#'   columns should be named. Only the rows of \code{gene_sets} matching
+#'   the rows of \code{Z} will be used in the enrichment analysis.
 #'
 #' @param Z Matrix of gene-level statistics such as z-scores, with
 #'   rows corresponding to genes. An enrichment analysis is performed
-#'   for each column of \code{Z}. The rows and columns should be named,
-#'   and rows of \code{Z} matching with columns of \code{gene_sets} will
+#'   for each column of \code{Z}. The rows and columns should be named;
+#'   rows of \code{Z} matching the columns of \code{gene_sets} will
 #'   be used in the enrichment analysis.
 #'
 #' @param verbose When \code{verbose = TRUE}, information about the
@@ -31,11 +33,20 @@
 #' @param \dots Additional arguments passed to
 #'   \code{\link[fgsea]{fgsea}}.
 #' 
-#' @return Describe return value here.
+#' @return The return value is a list containing four n x k matrices
+#' of gene set enrichment analysis results, where n is the number of
+#' gene sets and k is the number of columns in \code{Z}. The matrices
+#' give the p-values (pval), enrichment scores (ES), normalized
+#' enrichment scores (NES), and expected errors (log2err). See
+#' \code{\link[fgsea]{fgseaMultilevel}} for more details about these
+#' outputs.
 #'
 #' @examples
-#' # Add an example here.
-#' 
+#' data(gene_sets_human)
+#' data(pbmc_facs_z)
+#' gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z,
+#'                          nproc = 4)
+#'
 #' @importFrom fgsea fgsea
 #' 
 #' @export 
@@ -59,16 +70,17 @@ perform_gsea <- function (gene_sets, Z, verbose = TRUE, eps = 1e-32,
   gene_sets <- out$A
   Z         <- out$Z
   if (nrow(Z) == 0)
-    stop("Failed to align gene_sets and Z by rownames.")
+    stop("Failed to align gene_sets and Z by row names.")
   if (verbose)
-    cat("Using statistics from",nrow(Z),"genes for enrichment analysis.\n")
+    cat("Using statistics from",nrow(Z),"genes for gene set enrichment",
+        "analysis.\n")
   
   # Convert the gene sets binary adjacency matrix into the format
   # accepted by fgsea.
   if (verbose)
     cat("Converting gene set data for fgsea.\n")
   pathways <- matrix2pathways(gene_sets)
-
+  
   # Initialize the outputs.
   out <- list(pval    = matrix(0,n,k),
               log2err = matrix(0,n,k),
