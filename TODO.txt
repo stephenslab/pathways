@@ -1,8 +1,6 @@
 to do
 =====
 
-+ Update pbmc_facs_z.
-
 + Update README.
 
 + Implement gsea_plotly.
@@ -13,4 +11,4 @@ to do
 
 + Fill out roxygen2 docs for gsea_plotly.
 
-
++ Create example(s) for perform_gsea.
