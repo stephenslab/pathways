@@ -120,8 +120,8 @@ compile_data_for_gsea_plot <- function (gene_set_info, gsea_res, k,
   # Subsample the gene sets with p-values close to zero because those
   # gene sets are not particularly interesting, and there are many of
   # them, which slows down the plotting.
-  i   <- which(with(dat,!(abs(p0) < 3 & abs(p1) < 3)))
-  j   <- which(with(dat,abs(p0) < 3 & abs(p1) < 3))
+  i   <- which(with(dat,!(abs(p0) < 1 & abs(p1) < 1)))
+  j   <- which(with(dat,abs(p0) < 1 & abs(p1) < 1))
   n   <- length(j)
   j   <- sample(j,ceiling(n/10))
   dat <- dat[c(i,j),]

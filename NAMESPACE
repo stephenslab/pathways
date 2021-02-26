@@ -2,6 +2,7 @@
 
 export(gsea_plotly)
 export(perform_gsea)
+import(Matrix)
 importFrom(fgsea,fgsea)
 importFrom(plotly,add_trace)
 importFrom(plotly,layout)

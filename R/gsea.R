@@ -42,11 +42,18 @@
 #' outputs.
 #'
 #' @examples
+#' # Add comments here.
 #' data(gene_sets_human)
 #' data(pbmc_facs_z)
+#'
+#' # Add comments here.
 #' gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z,
 #'                          nproc = 4)
 #'
+#' # Add comments here.
+#' gsea_plotly(gsea_res,gene_sets_human$gene_set_info,1)
+#'
+#' @import Matrix
 #' @importFrom fgsea fgsea
 #' 
 #' @export 
