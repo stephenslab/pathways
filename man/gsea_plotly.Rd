@@ -9,11 +9,15 @@ gsea_plotly(
   gene_set_info,
   k,
   file,
-  height = 675,
+  height = 600,
   width = 800,
   title = NULL,
-  min_pval = 1,
-  max_name_len = 44
+  max_name_len = 44,
+  colors = c("gold", "darkblue", "tomato", "dodgerblue", "darkmagenta", "yellowgreen",
+    "dodgerblue", "olivedrab", "firebrick", "darkorange", "magenta", "darkblue", "gold",
+    "tomato", "gold", "olivedrab", "darkblue", "darkorange", "magenta", "yellowgreen",
+    "tomato", "dodgerblue"),
+  shapes = c(rep("circle", 4), rep("triangle-up", 10), rep("diamond", 8))
 )
 }
 \arguments{
@@ -31,12 +35,10 @@ gsea_plotly(
 
 \item{title}{Describe input argument "title" here.}
 
-\item{min_pval}{Describe input argument "min_pval" here.}
-
 \item{max_name_len}{Describe input argument "max_name_len" here.}
 }
 \value{
-Describe return value here.
+Describe the return value here.
 }
 \description{
 Create an interactive scatterplot using plotly to

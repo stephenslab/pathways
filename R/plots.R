@@ -1,22 +1,3 @@
-gsea_plot_shapes <- rep(c("circle","square"),10)
-gsea_plot_colors <- c("gold",         # biocyc
-                      "yellowgreen",  # C1
-                      "dodgerblue",   # C2
-                      "olivedrab",    # C3
-                      "firebrick",    # C4
-                      "darkorange",   # C5
-                      "magenta",      # C6
-                      "darkblue",     # C7
-                      "gold",         # H
-                      "tomato",       # humancyc
-                      "olivedrab",    # inoh
-                      "darkblue",     # kegg
-                      "royalblue",    # netpath
-                      "darkorange",   # panther
-                      "yellowgreen",  # pathbank
-                      "magenta",      # pid
-                      "dodgerblue")   # reactome
-
 #' @title Add Title Here
 #' 
 #' @description Create an interactive scatterplot using plotly to
@@ -58,8 +39,17 @@ gsea_plot_colors <- c("gold",         # biocyc
 #'
 gsea_plotly <- function (gsea_res, gene_set_info, k, file, 
                          height = 600, width = 800, title = NULL,
-                         max_name_len = 44) {
-
+                         max_name_len = 44,
+                         colors = c("gold","darkblue","tomato","dodgerblue",
+                                    "darkmagenta","yellowgreen","dodgerblue",
+                                    "olivedrab","firebrick","darkorange",
+                                    "magenta","darkblue","gold","tomato",
+                                    "gold","olivedrab","darkblue",
+                                    "darkorange","magenta","yellowgreen",
+                                    "tomato","dodgerblue"),
+                         shapes = c(rep("circle",4),rep("x",10),
+                                    rep("diamond",8))) {
+    
   # Compile the data for plotting.
   dat <- compile_data_for_gsea_plot(gene_set_info,gsea_res,k,min_pval,
                                     max_name_len)
@@ -68,7 +58,7 @@ gsea_plotly <- function (gsea_res, gene_set_info, k, file,
   p <- plot_ly(data = dat,x = ~p0,y = ~p1,color = ~database,symbol = ~database,
                text = ~sprintf("%s\nid: %s\np-value: %0.2e",name,id,10^(-p1)),
                type = "scatter",mode = "markers",hoverinfo = "text",
-               symbols = gsea_plot_shapes,colors = gsea_plot_colors,
+               symbols = shapes,colors = colors,
                marker = list(size = 8,line = list(color = "white",width = 1)),
                height = height,width = width)
   p <- add_trace(p,data = data.frame(x = range(c(dat$p0,dat$p1)),
