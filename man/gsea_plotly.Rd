@@ -17,7 +17,7 @@ gsea_plotly(
     "dodgerblue", "olivedrab", "firebrick", "darkorange", "magenta", "darkblue", "gold",
     "tomato", "gold", "olivedrab", "darkblue", "darkorange", "magenta", "yellowgreen",
     "tomato", "dodgerblue"),
-  shapes = c(rep("circle", 4), rep("triangle-up", 10), rep("diamond", 8))
+  shapes = c(rep("circle", 4), rep("x", 10), rep("diamond", 8))
 )
 }
 \arguments{

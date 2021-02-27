@@ -49,7 +49,16 @@
 #' # Perform the gene set enrichment analysis using fgsea.
 #' gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z)
 #'
-#' # Add comments here.
+#' # To improve the plot, add more info to the "database" column.
+#' gene_set_info <-
+#'   transform(gene_sets_human$gene_set_info,
+#'             database = factor(paste(database,
+#'               ifelse(database == "MSigDB",
+#'                      as.character(category_code),
+#'                      as.character(data_source)),sep = "-")))
+#'
+#' # Create an interactive plot for exploring the results of the gene
+#' # set enrichment analysis.
 #' gsea_plotly(gsea_res,gene_sets_human$gene_set_info,"B",
 #'             file = "gsea_b_cells.html",title = "B cells")
 #'

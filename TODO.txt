@@ -1,12 +1,7 @@
 to do
 =====
 
-+ Deal better with missing (NA) enrichment test statistics in
-  gsea_plotly.
-
 + Update README.
-
-+ Implement gsea_plotly.
 
 + Fill out roxygen2 docs for gsea_plotly.
 
