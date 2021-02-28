@@ -24,10 +24,11 @@ install_github("stephenslab/pathways")
 Load the package:
 
 ```R
-library(pathways}
+library(pathways)
 ```
 
-Try running the gene set enrichment analysis example:
+Try running the gene set enrichment analysis example (not that it may
+take a little while to complete the gene set enrichment analysis):
 
 ```R
 example("perform_gsea")
