@@ -7,7 +7,7 @@ Commons and MSigDB. The gene sets are compiled from three sources:
 [NCBI BioSystems][biosystems], [Pathway Commons][pc] and 
 [MSigDB][msigdb].
 
-See [here][https://stephenslab.github.io/pathways/gsea_b_cells.html]
+See [here](https://stephenslab.github.io/pathways/gsea_b_cells.html)
 for an example of an interactive plot for exploring the results of a
 gene set enrichment analysis on differential expression in B cells
 vs. other immune cell populations.
