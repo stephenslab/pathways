@@ -50,12 +50,13 @@ A simple interface for performing gene set enrichment
   analysis on multiple collections of gene-level statistics.
 }
 \examples{
-# Load the gene sets and the results of the differential
+# Load the human gene sets and results of a differential
 # expression analysis.
 data(gene_sets_human)
 data(pbmc_facs_z)
 
-# Perform the gene set enrichment analysis using fgsea.
+# Perform the gene set enrichment analysis using fgsea. This step
+# may take a little while.
 gsea_res <- perform_gsea(gene_sets_human$gene_sets,pbmc_facs_z)
 
 # To improve the plot, add more info to the "database" column.

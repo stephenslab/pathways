@@ -1,45 +1,34 @@
 # pathways
 
-Human and mouse gene set data compiled for gene set enrichment
-analyses. The gene sets are compiled from three sources:
-[NCBI BioSystems][biosystems], [Pathway Commons][pc] and
+Human and mouse gene sets compiled for gene set enrichment analysis,
+and a simple interface for performing gene set enrichment analysis
+using fgsea. The gene sets are compiled from NCBI BioSystems, Pathway
+Commons and MSigDB. The gene sets are compiled from three sources:
+[NCBI BioSystems][biosystems], [Pathway Commons][pc] and 
 [MSigDB][msigdb].
+
+See [here][] for an example of an interactive plot for exploring the
+results of the gene set enrichment analysis.
 
 ## Quick Start
 
-Load the gene set data into R, e.g.,
+Install the package:
 
 ```R
-library(Matrix)
-load("gene_sets_human.RData")
+library(remotes)
+install_github("stephenslab/pathways")
 ```
 
-The gene-set data are stored as an n x m sparse matrix, where n is the
-number of genes, and m is the number of gene sets. For the human gene
-sets, n = 61,676 and m = 37,856.
+Load the package:
 
 ```R
-dim(gene_sets)
+library(pathways}
 ```
 
-An entry `gene_sets[i,j]` of sparse matrix is 1 if gene i is annotated
-to gene set j; otherwise, the entry is zero. For example, to retrieve
-the gene set for the IL12-mediated signaling events pathway from the
-BioSystems database, run:
+Try running the gene set enrichment analysis example:
 
 ```R
-id <- subset(gene_set_info,
-             name == "IL12-mediated signaling events" &
-             database == "BioSystems")$id
-genes <- which(gene_sets[,id] > 0)
-```
-
-This will give you the numbers of the rows in the `gene_info`
-table. To look up information about these genes, such as their
-official symbols, and the Ensembl gene ids, you would do
-
-```R
-gene_info[genes,c("GeneID","Symbol","Ensembl")]
+example("perform_gsea")
 ```
 
 ## Other notes
