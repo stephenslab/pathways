@@ -53,14 +53,15 @@
 #' gene_set_info <-
 #'   transform(gene_sets_human$gene_set_info,
 #'             database = factor(paste(database,
-#'               ifelse(database == "MSigDB",
-#'                      as.character(category_code),
-#'                      as.character(data_source)),sep = "-")))
+#'                                     ifelse(database == "MSigDB",
+#'                                            as.character(category_code),
+#'                                            as.character(data_source)),
+#'                                     sep = "-")))
 #'
 #' # Create an interactive plot for exploring the results of the gene
 #' # set enrichment analysis.
-#' gsea_plotly(gsea_res,gene_sets_human$gene_set_info,"B",
-#'             file = "gsea_b_cells.html",title = "B cells")
+#' gsea_plotly(gsea_res,gene_set_info,"B",file = "gsea_b_cells.html",
+#'             title = "B cells")
 #'
 #' @import Matrix
 #' @importFrom fgsea fgsea

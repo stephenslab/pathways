@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{gsea_plotly}
 \alias{gsea_plotly}
-\title{Add Title Here}
+\title{Interactive Gene Set Enrichment Analysis Plot}
 \usage{
 gsea_plotly(
   gsea_res,
@@ -11,7 +11,7 @@ gsea_plotly(
   file,
   height = 600,
   width = 800,
-  title = NULL,
+  title = "gsea plot",
   max_name_len = 44,
   colors = c("gold", "darkblue", "tomato", "dodgerblue", "darkmagenta", "yellowgreen",
     "dodgerblue", "olivedrab", "firebrick", "darkorange", "magenta", "darkblue", "gold",
@@ -21,32 +21,47 @@ gsea_plotly(
 )
 }
 \arguments{
-\item{gsea_res}{Describe input argument "gsea_res" here.}
+\item{gsea_res}{An output from \code{\link{perform_gsea}}.}
 
-\item{gene_set_info}{Describe input argument "gene_set_info" here.}
+\item{gene_set_info}{A data frame containing information about the
+gene sets. It should have, at a minimum, columns \dQuote{name},
+\dQuote{id} and \dQuote{database}.}
 
-\item{k}{Describe input argument "k" here.}
+\item{k}{The column of the gene set enrichment results used for the
+plot.}
 
-\item{file}{Describe input argument "file" here.}
+\item{file}{Save the interactive plot to this HTML file using
+\code{\link[htmlwidgets]{saveWidget}}.}
 
-\item{height}{Describe input argument "height" here.}
+\item{height}{Height of the plot in pixels. Passed as argument
+\dQuote{height} to \code{\link[plotly]{plot_ly}}.}
 
-\item{width}{Describe input argument "width" here.}
+\item{width}{Width of the plot in pixels. Passed as argument
+\dQuote{width} to \code{\link[plotly]{plot_ly}}.}
 
-\item{title}{Describe input argument "title" here.}
+\item{title}{The text used for the plot title.}
 
-\item{max_name_len}{Describe input argument "max_name_len" here.}
+\item{max_name_len}{Pathway names longer than this are shortened to
+this number of characters.}
+
+\item{colors}{Colors used to draw the points in the plot; passed as
+argument \dQuote{colors} to \code{plot_ly}.}
+
+\item{shapes}{Shapes used to draw the points in the plot; passed as
+argument \dQuote{shapes} to \code{plot_ly}.}
 }
 \value{
-Describe the return value here.
+A \code{plotly} object.
 }
 \description{
-Create an interactive scatterplot using plotly to
-explore the gene-set enrichment results for a given topic k. Input
-argument "gene_set_info" is a data frame containing information
-about the gene sets; "gsea_res" is an output from function
-"perform_gsea"; and "label_gene_sets" is a vector of gene set ids
-to be labeled in the plot.
+Create an interactive scatterplot to explore the
+  results of a gene set enrichment analysis. In the plot, one point
+  is drawn for each gene set. The color and shape of the points are
+  varied the gene set database. To compare results across multiple
+  analyses, the p-value for the selected analysis (or column) is
+  plotted on the vertical axis, and the \dQuote{most extreme} p-value
+  from the other analyses (or columns) is plotted along the
+  horizontal axis.
 }
 \examples{
 # See perform_gsea for examples.

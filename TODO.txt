@@ -3,6 +3,3 @@ to do
 
 + Update README.
 
-+ Fill out roxygen2 docs for gsea_plotly.
-
-+ Implement perform_gsea example(s).

@@ -1,6 +1,6 @@
 # pathways
 
-Human and mouse gene-set data compiled for gene-set enrichment
+Human and mouse gene set data compiled for gene set enrichment
 analyses. The gene sets are compiled from three sources:
 [NCBI BioSystems][biosystems], [Pathway Commons][pc] and
 [MSigDB][msigdb].
