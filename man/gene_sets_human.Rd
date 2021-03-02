@@ -15,10 +15,10 @@
     compiled from the \code{Homo_sapiens.gene_info.gz} file downloaded
     from the NCBI FTP site.}
 
-  \item{gene_set_info}{Data frame containing information on the gene
-    sets, including gene set name, id and database of origin. The
-    columns "category_code", "sub_category_code", "organism" and
-    "description_brief" are only used for the MSigDB gene sets.}
+  \item{gene_set_info}{Data frame containing information on the
+    gene sets, including gene set name, id and database of origin. The
+    columns "sub_category_code", "organism" and "description_brief" are
+    only used for the MSigDB gene sets.}
 
   \item{gene_sets}{Gene sets encoded as a 61,676 x 37,856 sparse
     binary matrix, in which \code{gene_sets[i,j] = 1} if and only if
